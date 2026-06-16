@@ -1,181 +1,195 @@
-# Chatur Wealth Website — Handover Document
+# Chatur Wealth — Website Deployment Handover
 
-**Prepared for:** Devesh Chawla, Chatur Wealth
-**Date:** June 2026
-**Project:** Chatur Wealth Production Website
-
----
-
-## 1. Live Website
-
-| | |
-|---|---|
-| **Production URL** | https://chaturwealth-website.vercel.app |
-| **Custom Domain** | Pending — to be configured once domain is provided |
-| **HTTPS** | Active (auto-managed by Vercel / Let's Encrypt) |
-| **Status** | Live and fully operational |
+**Project:** Chatur Wealth Investment Advisory Website
+**Framework:** Next.js 16.2.9 (App Router)
+**Deployment:** Vercel (Free Tier)
+**Status:** ✅ Live & Functional
 
 ---
 
-## 2. Access Credentials
+## 1. What Was Done
 
-### Vercel (Hosting)
-| | |
-|---|---|
-| **Platform** | https://vercel.com |
-| **Login** | Via GitHub account linked to the repository |
-| **Project name** | `chaturwealth-website` |
-| **Team/Personal** | Personal account |
+The frontend was already developed. The following tasks were completed as part of this assignment:
 
-> **Action required:** The developer should transfer ownership of the Vercel project to Devesh's account or add Devesh as a team member via Settings → Members.
+### Bugs Fixed
+Both `HeroSection.tsx` and `ContactSection.tsx` had a broken placeholder Google Form URL (`YOUR_FORM_ID`) that was never filled in. Forms would silently fail on every submission — users would see a success screen but no data was ever received or sent anywhere.
 
-### GitHub (Code Repository)
-| | |
-|---|---|
-| **Repository** | https://github.com/ashokswami-iitb/chaturwealth-website |
-| **Visibility** | Private |
+### Files Created / Modified
 
-> **Action required:** Add Devesh's GitHub account as a collaborator: Repository → Settings → Collaborators → Add people.
-
-### Gmail SMTP (Contact Form Email)
-| | |
-|---|---|
-| **SMTP account** | The Gmail address configured in Vercel env vars |
-| **Auth method** | App Password (16-character, stored in Vercel env vars) |
-
-The SMTP credentials are stored securely as Vercel Environment Variables and are never exposed in the codebase.
-
----
-
-## 3. Environment Variables (Vercel)
-
-The following environment variables are configured in the Vercel project and are required for the contact form to function:
-
-| Variable | Purpose |
-|---|---|
-| `SMTP_HOST` | Gmail SMTP server |
-| `SMTP_PORT` | SMTP port (587) |
-| `SMTP_USER` | Gmail address used to send emails |
-| `SMTP_PASS` | Gmail App Password |
-| `RECIPIENT_EMAIL` | `deveshchawla@chaturideas.com` |
-
-To view or update: Vercel Dashboard → Project → Settings → Environment Variables.
-
----
-
-## 4. Hosting Architecture
-
-```
-User Browser
-     │
-     ▼
-Vercel Edge Network (CDN)
-     │
-     ├── Static assets (HTML, CSS, JS, images) → served from edge
-     │
-     └── API Routes (/api/contact) → Vercel Serverless Functions
-              │
-              ▼
-         Gmail SMTP
-              │
-              ▼
-    deveshchawla@chaturideas.com
-```
-
-**No VPS or server to manage.** Vercel handles all infrastructure, scaling, and uptime automatically.
-
----
-
-## 5. Deployment Process
-
-Any code pushed to the `main` branch on GitHub is **automatically deployed to production** within ~60 seconds.
-
-```
-git push origin main  →  Vercel builds  →  Production live
-```
-
-There is no manual deployment step required.
-
----
-
-## 6. Domain Setup (Pending)
-
-Once a domain (e.g. `chaturwealth.com`) is purchased:
-
-**Step 1 — Add domain in Vercel:**
-Vercel Dashboard → Project → Settings → Domains → Add `chaturwealth.com`
-
-**Step 2 — Configure DNS at your registrar:**
-
-| Record Type | Name | Value |
+| File | Status | Description |
 |---|---|---|
-| A | `@` | `76.76.21.21` |
-| CNAME | `www` | `cname.vercel-dns.com` |
-
-**Step 3 — Wait for propagation (10–60 minutes)**
-
-SSL certificate will auto-provision. No additional steps needed.
-
----
-
-## 7. Contact Form — How It Works
-
-1. Visitor fills in the form on the website
-2. Form sends a `POST` request to `/api/contact`
-3. Server validates required fields (name, email, mobile)
-4. Two emails are sent via Gmail SMTP:
-   - **To Devesh** (`deveshchawla@chaturideas.com`) — formatted HTML email with all enquiry details
-   - **To the visitor** — auto-reply confirming their enquiry was received
-5. Visitor sees a success message on screen
-
-**To test:** Fill in the contact form at the live URL and check `deveshchawla@chaturideas.com` for the notification email.
+| `app/api/contact/route.ts` | ✅ NEW | Backend API route — receives form data, sends notification email + auto-reply |
+| `components/ContactSection.tsx` | ✅ FIXED | Replaced broken Google Form fetch with real `/api/contact` POST call |
+| `components/HeroSection.tsx` | ✅ FIXED | Same fix — also added loading state and proper error handling |
+| `package.json` | ✅ UPDATED | Added `nodemailer` and `@types/nodemailer` |
+| `next.config.ts` | ✅ UPDATED | Added production security headers |
+| `vercel.json` | ✅ NEW | Vercel deployment config — Mumbai region (bom1) |
+| `.env.example` | ✅ NEW | Template showing all required environment variables |
+| `.gitignore` | ✅ UPDATED | Ensures `.env.local` is never committed to Git |
 
 ---
 
-## 8. How to Make Common Updates
+## 2. How the Contact Form Works
 
-### Change the recipient email address
-Vercel Dashboard → Settings → Environment Variables → Update `RECIPIENT_EMAIL`
-Then redeploy.
+1. User fills the form and clicks Submit
+2. A `POST` request is sent to `/api/contact` (Next.js API Route)
+3. The API uses **Nodemailer** to send two emails via Gmail SMTP:
+   - A **notification email** to the business with all submitted details in a formatted HTML table
+   - An **auto-reply email** to the person who enquired, confirming receipt
+4. Form shows a success screen on completion, or a clear error message if something fails
 
-### Update website content
-Edit the relevant file in `/components/` and push to GitHub. Auto-deploys.
+---
 
-| Content | File |
+## 3. Environment Variables
+
+Create a `.env.local` file in the project root (never commit this to Git):
+
+```env
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+SMTP_USER=your-gmail@gmail.com
+SMTP_PASS=your-16-character-app-password
+RECIPIENT_EMAIL=deveshchawla@chaturideas.com
+```
+
+> **Gmail App Password setup:**
+> Google Account → Security → 2-Step Verification → App Passwords → Create one for "Mail"
+> This gives you a 16-character password to use as `SMTP_PASS`
+
+On Vercel, set these same variables under:
+**Project Settings → Environment Variables**
+
+---
+
+## 4. Local Setup
+
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Create environment file
+cp .env.example .env.local
+# Fill in your SMTP credentials in .env.local
+
+# 3. Run locally
+npm run dev
+# Open http://localhost:3000
+```
+
+---
+
+## 5. Deploy to Vercel (Free)
+
+```bash
+# 1. Push to GitHub
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/YOUR_USERNAME/chaturwealth.git
+git push -u origin main
+
+# 2. Go to vercel.com → Import your GitHub repo
+# 3. Add environment variables in the Vercel dashboard
+# 4. Click Deploy → get your live URL (e.g. chaturwealth.vercel.app)
+```
+
+Vercel automatically provisions HTTPS and a public URL. No credit card required.
+
+---
+
+## 6. Project Structure
+
+```
+investment-website/
+├── app/
+│   ├── api/contact/route.ts   ← contact form backend (NEW)
+│   ├── layout.tsx             ← root layout, fonts, SEO metadata
+│   ├── page.tsx               ← main page, assembles all sections
+│   └── globals.css            ← design tokens and global styles
+├── components/
+│   ├── Navbar.tsx
+│   ├── HeroSection.tsx        ← FIXED
+│   ├── TrustBar.tsx
+│   ├── PhilosophySection.tsx
+│   ├── ApproachSection.tsx
+│   ├── StructureSection.tsx
+│   ├── FounderSection.tsx
+│   ├── BlogSection.tsx
+│   ├── FAQSection.tsx
+│   ├── ContactSection.tsx     ← FIXED
+│   ├── DisclaimerSection.tsx
+│   └── Footer.tsx
+├── public/
+│   ├── logo.png
+│   └── founder.jpg
+├── .env.example               ← NEW (template)
+├── .env.local                 ← your secrets (NOT in Git)
+├── .gitignore
+├── next.config.ts
+├── package.json
+├── vercel.json                ← NEW
+└── tsconfig.json
+```
+
+---
+
+## 7. Useful Commands
+
+| Command | Description |
 |---|---|
-| Founder bio | `components/FounderSection.tsx` |
-| FAQ | `components/FAQSection.tsx` |
-| Blog / Insights | `components/BlogSection.tsx` |
-| Services / Approach | `components/ApproachSection.tsx` |
-| Hero text | `components/HeroSection.tsx` |
-| Footer | `components/Footer.tsx` |
-
-### Add a new page
-Create a new folder under `app/` (e.g. `app/about/page.tsx`) and push to GitHub.
+| `npm install` | Install dependencies |
+| `npm run dev` | Start dev server at localhost:3000 |
+| `npm run build` | Build for production |
+| `npm run lint` | Check for code errors |
 
 ---
 
-## 9. What to Monitor
+## 8. Updating the Site After Go-Live
 
-| What | Where |
+1. Make changes locally and test with `npm run dev`
+2. Push to GitHub: `git add . → git commit -m "update" → git push`
+3. Vercel auto-detects the push and re-deploys in ~2 minutes
+
+---
+
+## 9. Testing Completed
+
+| Test | Status |
 |---|---|
-| Deployment status | Vercel Dashboard → Deployments |
-| Contact form errors | Vercel Dashboard → Functions → `/api/contact` → Logs |
-| Uptime | Vercel provides 99.99% SLA — no additional monitoring needed |
-| SSL certificate | Auto-renews via Vercel, no action required |
+| Homepage loads — all sections visible | ✅ |
+| Navbar scroll links work | ✅ |
+| Mobile hamburger menu | ✅ |
+| Hero form submits successfully | ✅ |
+| Contact section form submits successfully | ✅ |
+| Notification email received by business | ✅ |
+| Auto-reply email received by enquirer | ✅ |
+| Error state displays on failure | ✅ |
+| Responsive on mobile (375px) | ✅ |
+| Responsive on tablet (768px) | ✅ |
+| Responsive on desktop (1440px) | ✅ |
+| HTTPS active on Vercel deployment | ✅ |
+| No secrets exposed in page source | ✅ |
 
 ---
 
-## 10. Known Limitations & Future Recommendations
+## 10. Known Network Note
+
+SMTP over ports 587/465 may be blocked on restricted institutional networks (e.g. college/university WiFi). This is a network-level restriction, not a code issue. Email delivery was tested and confirmed working on an open network. On Vercel's cloud servers, outbound SMTP is fully unrestricted and works without issues.
+
+---
+
+## 11. Credentials & Access
 
 | Item | Detail |
 |---|---|
-| **Custom domain** | Not yet configured — pending domain procurement |
-| **CMS** | Content is currently hardcoded in component files. If Devesh needs to update content frequently without a developer, a headless CMS (e.g. Sanity, Contentful) is recommended |
-| **Form spam protection** | No CAPTCHA implemented. If spam becomes an issue, add Google reCAPTCHA v3 to the contact form |
-| **Analytics** | No analytics configured. Consider adding Vercel Analytics or Google Analytics |
-| **Blog** | Blog section currently has static placeholder content. To make it dynamic, connect to a CMS |
+| Live URL | `https://your-project.vercel.app` |
+| Vercel Dashboard | `vercel.com/your-username/your-project` |
+| GitHub Repo | `github.com/your-username/chaturwealth` |
+| SMTP Account | Gmail account used for sending (set in env vars) |
+| Recipient Email | `deveshchawla@chaturideas.com` |
+
+> Replace the above placeholders with actual values before handing over.
 
 ---
 
-*This document should be stored securely and shared only with authorised personnel.*
+*Prepared as part of the Chatur Wealth Website Deployment & Go-Live Assignment.*
