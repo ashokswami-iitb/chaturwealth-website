@@ -46,7 +46,7 @@ Create a `.env.local` file in the project root (never commit this to Git):
 
 ```env
 SMTP_HOST=smtp.gmail.com
-SMTP_PORT=465
+SMTP_PORT=587
 SMTP_USER=your-gmail@gmail.com
 SMTP_PASS=your-16-character-app-password
 RECIPIENT_EMAIL=deveshchawla@chaturideas.com
@@ -182,10 +182,9 @@ SMTP over ports 587/465 may be blocked on restricted institutional networks (e.g
 
 | Item | Detail |
 |---|---|
-| Live URL | `https://your-project.vercel.app` |
-| Vercel Dashboard | `vercel.com/your-username/your-project` |
-| GitHub Repo | `github.com/your-username/chaturwealth` |
-| SMTP Account | Gmail account used for sending (set in env vars) |
+| Live URL | `https://chaturwealth-website.vercel.app` |    
+| GitHub Repo | `https://github.com/ashokswami-iitb/chaturwealth-website` |
+| Current SMTP configuration uses a temporary developer-owned Gmail account for testing and deployment. For production ownership transfer, SMTP credentials should be updated to a business-owned email account. |
 | Recipient Email | `deveshchawla@chaturideas.com` |
 
 > Replace the above placeholders with actual values before handing over.
