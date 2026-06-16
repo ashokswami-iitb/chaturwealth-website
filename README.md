@@ -184,9 +184,6 @@ The contact form is handled by a Next.js API route at `app/api/contact/route.ts`
 
 ### Browsers Tested
 - [x] Google Chrome (latest)
-- [x] Safari (latest)
-- [x] Mozilla Firefox (latest)
-- [x] Microsoft Edge (latest)
 
 ### Devices Tested
 - [x] Desktop (1440px+)
@@ -205,7 +202,6 @@ The contact form is handled by a Next.js API route at `app/api/contact/route.ts`
 - [x] All images load correctly
 - [x] No console errors in production build
 - [x] HTTPS active, no mixed content warnings
-- [x] Page load under 3 seconds (Vercel analytics)
 
 ---
 
@@ -238,6 +234,6 @@ For major version upgrades, test locally before pushing to production.
 
 ## Support & Handover
 
-For any questions about the codebase or deployment, contact the developer.
+For deployment details, maintenance instructions, and configuration information, refer to HANDOVER.md.
 
 Built and deployed as part of the Chatur Wealth website go-live assignment.
