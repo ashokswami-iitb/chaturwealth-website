@@ -1,0 +1,265 @@
+@import "tailwindcss";
+
+/* ─── Design tokens ─────────────────────────────────────────────── */
+:root {
+  /* Palette */
+  --ivory:       #faf9f6;
+  --cream:       #f5f3ee;
+  --cream-mid:   #ede9e0;
+  --white:       #ffffff;
+  --navy:        #0d1f3c;
+  --navy-mid:    #1a3460;
+  --navy-light:  #243d6e;
+  --body:        #3a4559;
+  --muted:       #7a8498;
+  --border:      #e2ddd4;
+  --border-soft: #ede9e0;
+  --gold:        #b87010;
+  --gold-light:  #d4971e;
+  --gold-pale:   #fdf6e8;
+  --gold-border: rgba(184,112,16,0.22);
+
+  /* Elevation — warmer, deeper */
+  --shadow-xs: 0 1px 4px rgba(13,31,60,0.07);
+  --shadow-sm: 0 2px 10px rgba(13,31,60,0.08), 0 1px 3px rgba(13,31,60,0.05);
+  --shadow-md: 0 8px 28px rgba(13,31,60,0.10), 0 2px 8px rgba(13,31,60,0.06);
+  --shadow-lg: 0 20px 52px rgba(13,31,60,0.12), 0 4px 14px rgba(13,31,60,0.07);
+  --shadow-xl: 0 32px 80px rgba(13,31,60,0.14), 0 8px 24px rgba(13,31,60,0.08);
+  --shadow-gold: 0 8px 32px rgba(184,112,16,0.14), 0 2px 8px rgba(184,112,16,0.08);
+
+  /* Radii */
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 18px;
+  --r-xl: 24px;
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Sora', system-ui, -apple-system, sans-serif;
+
+  /* Motion — premium easing curves */
+  --ease-out:      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-in-out:   cubic-bezier(0.45, 0, 0.55, 1);
+  --ease-expo:     cubic-bezier(0.16, 1, 0.3, 1);     /* premium entrance */
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1); /* very subtle spring */
+}
+
+@theme inline {
+  --color-ivory:      var(--ivory);
+  --color-cream:      var(--cream);
+  --color-navy:       var(--navy);
+  --color-navy-mid:   var(--navy-mid);
+  --color-body:       var(--body);
+  --color-muted:      var(--muted);
+  --color-gold:       var(--gold);
+  --color-gold-light: var(--gold-light);
+  --font-display:     var(--font-display);
+  --font-body:        var(--font-body);
+}
+
+/* ─── Base ───────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--white);
+  color: var(--body);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+/* ─── Utility classes ────────────────────────────────────────────── */
+
+.serif { font-family: var(--font-display); }
+.text-gold { color: var(--gold); }
+
+/* Decorative gold rule */
+.rule-gold {
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* Section eyebrow label */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ─── Navbar logo — responsive, unconstrained ───────────────────── */
+/*
+  logo.png is 672 × 257 (ratio 2.62 : 1 — wide wordmark).
+  height drives sizing; width expands freely from aspect ratio.
+  max-width: none overrides Next.js Image's implicit max-width: 100%.
+*/
+.nav-logo {
+  display: block;
+  height: 42px;       /* mobile */
+  width: auto;
+  max-width: none;
+  object-fit: contain;
+}
+@media (min-width: 1024px) {
+  .nav-logo {
+    height: 54px;     /* desktop → renders ≈ 141px wide */
+  }
+}
+
+/* Footer logo — smaller variant of the same treatment */
+.footer-logo {
+  display: block;
+  height: 28px;
+  width: auto;
+  max-width: none;
+  object-fit: contain;
+  opacity: 0.82;
+}
+
+/* ─── Navigation link with animated underline ───────────────────── */
+.nav-link {
+  position: relative;
+  padding-bottom: 2px;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s var(--ease-expo);
+}
+.nav-link:hover { color: var(--gold) !important; }
+.nav-link:hover::after { transform: scaleX(1); }
+
+/* ─── Premium card ───────────────────────────────────────────────── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+  transition:
+    box-shadow 0.4s var(--ease-expo),
+    transform  0.4s var(--ease-expo),
+    border-color 0.3s ease;
+}
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+  border-color: var(--gold-border);
+}
+
+/* Gold accent card */
+.card-gold {
+  background: var(--gold-pale);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--r-lg);
+}
+
+/* ─── Button primitives ──────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  border-radius: 6px;
+  background: var(--navy);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-md);
+  transition:
+    background   0.25s ease,
+    transform    0.3s var(--ease-expo),
+    box-shadow   0.3s var(--ease-expo);
+}
+.btn-primary:hover {
+  background: var(--navy-mid);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  border-radius: 6px;
+  border: 1.5px solid var(--border);
+  color: var(--navy);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  transition:
+    border-color 0.25s ease,
+    color        0.25s ease,
+    transform    0.3s var(--ease-expo);
+}
+.btn-outline:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: translateY(-1px);
+}
+
+/* ─── Divider ────────────────────────────────────────────────────── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+/* ─── Inputs ─────────────────────────────────────────────────────── */
+input, select, textarea {
+  transition: border-color 0.2s var(--ease-expo), box-shadow 0.2s var(--ease-expo);
+}
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 0 3px rgba(184,112,16,0.08);
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--cream-mid); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-light); }
+
+/* ─── Focus ring ─────────────────────────────────────────────────── */
+*:focus-visible {
+  outline: 2px solid rgba(184,112,16,0.5);
+  outline-offset: 3px;
+}
+
+/* ─── Selection ──────────────────────────────────────────────────── */
+::selection {
+  background: rgba(184,112,16,0.15);
+  color: var(--navy);
+}
+
+/* ─── Section transition helper ─────────────────────────────────── */
+.section-fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s var(--ease-expo), transform 0.7s var(--ease-expo);
+}
+.section-fade-in.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
