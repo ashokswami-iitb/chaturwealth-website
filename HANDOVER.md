@@ -184,7 +184,7 @@ SMTP over ports 587/465 may be blocked on restricted institutional networks (e.g
 |---|---|
 | Live URL | `https://chaturwealth-website.vercel.app` |    
 | GitHub Repo | `https://github.com/ashokswami-iitb/chaturwealth-website` |
-| Current SMTP configuration uses a temporary developer-owned Gmail account for testing and deployment. For production ownership transfer, SMTP credentials should be updated to a business-owned email account. |
+| SMTP Account | Current SMTP configuration uses a temporary developer-owned Gmail account for testing and deployment. For production ownership transfer, SMTP credentials should be updated to a business-owned email account. |
 | Recipient Email | `deveshchawla@chaturideas.com` |
 
 > Replace the above placeholders with actual values before handing over.
