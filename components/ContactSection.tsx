@@ -3,22 +3,14 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
 
-type FormState = {
-  name: string;
-  mobile: string;
-  email: string;
-  investment: string;
-  query: string;
-};
-
-type Status = "idle" | "loading" | "success" | "error";
+const GOOGLE_FORM_URL =
+  "https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse";
 
 export default function ContactSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-  const [status, setStatus] = useState<Status>("idle");
-  const [errorMsg, setErrorMsg] = useState("");
-  const [form, setForm] = useState<FormState>({
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({
     name: "", mobile: "", email: "", investment: "", query: "",
   });
 
@@ -28,26 +20,13 @@ export default function ContactSection() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("loading");
-    setErrorMsg("");
-
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Something went wrong.");
-      }
-
-      setStatus("success");
-    } catch (err: unknown) {
-      setStatus("error");
-      setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Please try again.");
-    }
+    const p = new URLSearchParams({
+      "entry.name": form.name, "entry.mobile": form.mobile,
+      "entry.email": form.email, "entry.investment": form.investment,
+      "entry.query": form.query,
+    });
+    try { await fetch(`${GOOGLE_FORM_URL}?${p}`, { method: "POST", mode: "no-cors" }); } catch {}
+    setSubmitted(true);
   };
 
   return (
@@ -153,6 +132,8 @@ export default function ContactSection() {
             >
               <a
                 href="mailto:deveshchawla@chaturideas.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-4 p-5 rounded-[var(--r-md)] group transition-all duration-200"
                 style={{
                   background: "var(--ivory)",
@@ -198,7 +179,7 @@ export default function ContactSection() {
               transition={{ duration: 0.65, delay: 0.36, ease: [0.16, 1, 0.3, 1] }}
             >
               <a
-                href="https://www.linkedin.com/in/deveshchawla"
+                href="https://www.linkedin.com/in/devesh-chawla"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 p-5 rounded-[var(--r-md)] group transition-all duration-200"
@@ -287,7 +268,7 @@ export default function ContactSection() {
 
               {/* Form body */}
               <div className="px-8 py-8" style={{ background: "var(--white)" }}>
-                {status === "success" ? (
+                {submitted ? (
                   <div className="text-center py-12">
                     <div
                       className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5"
@@ -311,8 +292,8 @@ export default function ContactSection() {
                   <form onSubmit={submit} className="space-y-5">
                     <div className="grid sm:grid-cols-2 gap-5">
                       {[
-                        { name: "name",   label: "Full Name",     type: "text", placeholder: "Your full name" },
-                        { name: "mobile", label: "Mobile Number", type: "tel",  placeholder: "+91 98XXX XXXXX" },
+                        { name: "name",   label: "Full Name",     type: "text",  placeholder: "Your full name" },
+                        { name: "mobile", label: "Mobile Number", type: "tel",   placeholder: "+91 98XXX XXXXX" },
                       ].map((f) => (
                         <div key={f.name}>
                           <label
@@ -326,7 +307,7 @@ export default function ContactSection() {
                             name={f.name}
                             required
                             placeholder={f.placeholder}
-                            value={form[f.name as keyof FormState]}
+                            value={form[f.name as keyof typeof form]}
                             onChange={handle}
                             className="w-full rounded-[var(--r-sm)] px-4 py-3 text-[0.88rem] outline-none"
                             style={{
@@ -335,7 +316,7 @@ export default function ContactSection() {
                               color: "var(--navy)",
                             }}
                             onFocus={(e) => (e.currentTarget.style.borderColor = "var(--gold)")}
-                            onBlur={(e)  => (e.currentTarget.style.borderColor = "var(--border)")}
+                            onBlur={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
                           />
                         </div>
                       ))}
@@ -362,7 +343,7 @@ export default function ContactSection() {
                           color: "var(--navy)",
                         }}
                         onFocus={(e) => (e.currentTarget.style.borderColor = "var(--gold)")}
-                        onBlur={(e)  => (e.currentTarget.style.borderColor = "var(--border)")}
+                        onBlur={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
                       />
                     </div>
 
@@ -385,7 +366,7 @@ export default function ContactSection() {
                           color: form.investment ? "var(--navy)" : "var(--muted)",
                         }}
                         onFocus={(e) => (e.currentTarget.style.borderColor = "var(--gold)")}
-                        onBlur={(e)  => (e.currentTarget.style.borderColor = "var(--border)")}
+                        onBlur={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
                       >
                         <option value="">Select your investment range</option>
                         <option>₹50L – ₹1Cr</option>
@@ -415,27 +396,15 @@ export default function ContactSection() {
                           color: "var(--navy)",
                         }}
                         onFocus={(e) => (e.currentTarget.style.borderColor = "var(--gold)")}
-                        onBlur={(e)  => (e.currentTarget.style.borderColor = "var(--border)")}
+                        onBlur={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
                       />
                     </div>
 
-                    {/* Error message */}
-                    {status === "error" && (
-                      <div
-                        className="rounded-[var(--r-sm)] px-4 py-3 text-[0.82rem]"
-                        style={{ background: "#fff5f5", border: "1px solid #ffcccc", color: "#c0392b" }}
-                      >
-                        {errorMsg}
-                      </div>
-                    )}
-
                     <button
                       type="submit"
-                      disabled={status === "loading"}
                       className="btn-primary w-full justify-center"
-                      style={{ opacity: status === "loading" ? 0.7 : 1, cursor: status === "loading" ? "not-allowed" : "pointer" }}
                     >
-                      {status === "loading" ? "Sending…" : "Submit Enquiry"}
+                      Submit Enquiry
                     </button>
 
                     <p className="text-center text-[0.7rem]" style={{ color: "var(--muted)" }}>
