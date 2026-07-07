@@ -11,6 +11,8 @@ const featured = {
   readTime: "12 min read",
   author: "Editorial",
   date: "June 2025",
+  // FIX: Added href — was missing, button did nothing
+  href: "https://www.linkedin.com/pulse/why-disciplined-systems-beat-brilliant-traders-devesh-chawla",
 };
 
 const articles = [
@@ -21,6 +23,8 @@ const articles = [
       "Algorithmic trading uses computer programs following precise instructions to execute trades based on market conditions — eliminating human error and emotional interference from the process.",
     readTime: "6 min",
     date: "May 2025",
+    // FIX: Added href — was missing, button did nothing
+    href: "https://www.linkedin.com/in/deveshchawla/recent-activity/articles/",
   },
   {
     tag: "Risk Management",
@@ -29,6 +33,7 @@ const articles = [
       "A framework for thinking about downside before upside. Why the best risk managers think in terms of scenarios, not forecasts, and how systematic rules protect capital through every cycle.",
     readTime: "8 min",
     date: "April 2025",
+    href: "https://www.linkedin.com/in/deveshchawla/recent-activity/articles/",
   },
   {
     tag: "Research",
@@ -37,6 +42,7 @@ const articles = [
       "Not all applications of AI to finance are equal. We examine what AI can legitimately contribute to investment decision-making — and where its limitations demand human oversight.",
     readTime: "7 min",
     date: "March 2025",
+    href: "https://www.linkedin.com/in/deveshchawla/recent-activity/articles/",
   },
   {
     tag: "Psychology",
@@ -45,6 +51,7 @@ const articles = [
       "Fear and greed are not character flaws — they are hardwired human responses to uncertainty. Understanding their mechanism is the first step to removing them from your investment process.",
     readTime: "5 min",
     date: "February 2025",
+    href: "https://www.linkedin.com/in/deveshchawla/recent-activity/articles/",
   },
 ];
 
@@ -103,199 +110,213 @@ export default function BlogSection() {
         </div>
 
         {/* Featured article */}
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.85, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-          className="rounded-[var(--r-xl)] overflow-hidden mb-8 group cursor-pointer transition-all duration-300"
-          style={{
-            border: "1px solid var(--border)",
-            boxShadow: "var(--shadow-sm)",
-          }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLElement).style.boxShadow = "var(--shadow-lg)";
-            (e.currentTarget as HTMLElement).style.borderColor = "var(--gold-border)";
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLElement).style.boxShadow = "var(--shadow-sm)";
-            (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
-          }}
+        {/* FIX: Wrapped entire card in <a> tag — previously had cursor-pointer but no href, so clicking did nothing */}
+        <a
+          href={featured.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block mb-8"
         >
-          <div className="grid md:grid-cols-[1fr_1px_1fr]">
-            {/* Visual panel */}
-            <div
-              className="min-h-[280px] md:min-h-[360px] flex flex-col justify-between p-8 relative overflow-hidden"
-              style={{
-                background: "linear-gradient(160deg, var(--navy) 0%, #0a1928 100%)",
-              }}
-            >
-              {/* Architectural grid */}
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.85, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
+            className="rounded-[var(--r-xl)] overflow-hidden group cursor-pointer transition-all duration-300"
+            style={{
+              border: "1px solid var(--border)",
+              boxShadow: "var(--shadow-sm)",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.boxShadow = "var(--shadow-lg)";
+              (e.currentTarget as HTMLElement).style.borderColor = "var(--gold-border)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.boxShadow = "var(--shadow-sm)";
+              (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
+            }}
+          >
+            <div className="grid md:grid-cols-[1fr_1px_1fr]">
+              {/* Visual panel */}
               <div
-                className="absolute inset-0 opacity-[0.045]"
+                className="min-h-[280px] md:min-h-[360px] flex flex-col justify-between p-8 relative overflow-hidden"
                 style={{
-                  backgroundImage:
-                    "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
-                  backgroundSize: "40px 40px",
-                }}
-              />
-              {/* Large typographic mark */}
-              <div
-                className="absolute bottom-0 right-0 leading-none select-none pointer-events-none"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "clamp(8rem, 18vw, 14rem)",
-                  color: "rgba(255,255,255,0.028)",
-                  fontWeight: 700,
-                  lineHeight: 0.85,
+                  background: "linear-gradient(160deg, var(--navy) 0%, #0a1928 100%)",
                 }}
               >
-                CW
-              </div>
-              {/* Top: Tag */}
-              <div className="relative z-10">
-                <span
-                  className="inline-block px-3 py-1.5 rounded-[4px] text-[0.62rem] font-bold tracking-[0.16em] uppercase"
+                {/* Architectural grid */}
+                <div
+                  className="absolute inset-0 opacity-[0.045]"
                   style={{
-                    background: "rgba(212,151,30,0.18)",
-                    color: "var(--gold-light)",
-                    border: "1px solid rgba(212,151,30,0.28)",
+                    backgroundImage:
+                      "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
+                    backgroundSize: "40px 40px",
                   }}
-                >
-                  {featured.tag}
-                </span>
-              </div>
-              {/* Bottom: meta */}
-              <div className="relative z-10">
-                <div
-                  className="text-[0.65rem] font-semibold tracking-wider uppercase mb-3"
-                  style={{ color: "rgba(255,255,255,0.3)" }}
-                >
-                  {featured.author} · {featured.date} · {featured.readTime}
-                </div>
-                <div
-                  className="w-10 h-px"
-                  style={{ background: "var(--gold)" }}
                 />
-              </div>
-            </div>
-
-            {/* Divider */}
-            <div style={{ background: "var(--border)" }} className="hidden md:block" />
-
-            {/* Content */}
-            <div
-              className="p-9 lg:p-11 flex flex-col justify-center"
-              style={{ background: "var(--ivory)" }}
-            >
-              <h3
-                className="serif font-bold leading-snug mb-5"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
-                  color: "var(--navy)",
-                }}
-              >
-                {featured.title}
-              </h3>
-              <p
-                className="text-[0.92rem] leading-[1.85] mb-6"
-                style={{ color: "var(--body)" }}
-              >
-                {featured.excerpt}
-              </p>
-              <div className="flex items-center gap-2">
-                <span
-                  className="text-[0.78rem] font-semibold transition-colors duration-200 group-hover:text-[#b87010]"
-                  style={{ color: "var(--navy)" }}
-                >
-                  Read full article
-                </span>
-                <span
-                  className="text-[0.78rem] transition-transform duration-200 group-hover:translate-x-1"
-                  style={{ color: "var(--gold)" }}
-                >
-                  →
-                </span>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Secondary articles */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {articles.map((a, i) => (
-            <motion.article
-              key={a.title}
-              initial={{ opacity: 0, y: 24 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.25 + i * 0.09, ease: [0.16, 1, 0.3, 1] }}
-              className="rounded-[var(--r-lg)] overflow-hidden group cursor-pointer transition-all duration-300"
-              style={{
-                background: "var(--white)",
-                border: "1px solid var(--border)",
-                boxShadow: "var(--shadow-xs)",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.boxShadow = "var(--shadow-md)";
-                (e.currentTarget as HTMLElement).style.transform = "translateY(-3px)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.boxShadow = "var(--shadow-xs)";
-                (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
-              }}
-            >
-              {/* Colour accent bar */}
-              <div
-                className="h-[2px] w-full"
-                style={{ background: "linear-gradient(to right, var(--gold), var(--gold-border))" }}
-              />
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <span
-                    className="text-[0.65rem] font-bold tracking-[0.14em] uppercase"
-                    style={{ color: "var(--gold)" }}
-                  >
-                    {a.tag}
-                  </span>
-                  <span
-                    className="text-[0.65rem]"
-                    style={{ color: "var(--muted)" }}
-                  >
-                    {a.readTime}
-                  </span>
-                </div>
-                <h4
-                  className="serif font-bold leading-snug mb-3 group-hover:text-[#b87010] transition-colors duration-200"
+                {/* Large typographic mark */}
+                <div
+                  className="absolute bottom-0 right-0 leading-none select-none pointer-events-none"
                   style={{
                     fontFamily: "var(--font-display)",
-                    fontSize: "1.1rem",
-                    color: "var(--navy)",
+                    fontSize: "clamp(8rem, 18vw, 14rem)",
+                    color: "rgba(255,255,255,0.028)",
+                    fontWeight: 700,
+                    lineHeight: 0.85,
                   }}
                 >
-                  {a.title}
-                </h4>
+                  CW
+                </div>
+                {/* Top: Tag */}
+                <div className="relative z-10">
+                  <span
+                    className="inline-block px-3 py-1.5 rounded-[4px] text-[0.62rem] font-bold tracking-[0.16em] uppercase"
+                    style={{
+                      background: "rgba(212,151,30,0.18)",
+                      color: "var(--gold-light)",
+                      border: "1px solid rgba(212,151,30,0.28)",
+                    }}
+                  >
+                    {featured.tag}
+                  </span>
+                </div>
+                {/* Bottom: meta */}
+                <div className="relative z-10">
+                  <div
+                    className="text-[0.65rem] font-semibold tracking-wider uppercase mb-3"
+                    style={{ color: "rgba(255,255,255,0.3)" }}
+                  >
+                    {featured.author} · {featured.date} · {featured.readTime}
+                  </div>
+                  <div
+                    className="font-bold leading-tight text-white"
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "clamp(1.5rem, 2.8vw, 2rem)",
+                    }}
+                  >
+                    {featured.title}
+                  </div>
+                </div>
+              </div>
+
+              {/* Divider line */}
+              <div style={{ background: "var(--border)" }} />
+
+              {/* Content panel */}
+              <div className="p-8 md:p-10 flex flex-col justify-center" style={{ background: "var(--ivory)" }}>
+                <div
+                  className="text-[0.62rem] font-bold tracking-[0.18em] uppercase mb-4"
+                  style={{ color: "var(--gold)" }}
+                >
+                  Feature · Editorial
+                </div>
                 <p
-                  className="text-[0.82rem] leading-[1.75] mb-4"
+                  className="text-[0.92rem] leading-[1.85] mb-6"
                   style={{ color: "var(--body)" }}
                 >
-                  {a.excerpt}
+                  {featured.excerpt}
                 </p>
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-2">
                   <span
-                    className="text-[0.75rem] font-semibold"
+                    className="text-[0.78rem] font-semibold transition-colors duration-200 group-hover:text-[#b87010]"
                     style={{ color: "var(--navy)" }}
                   >
-                    Read more
+                    Read full article
                   </span>
                   <span
-                    className="text-[0.75rem] transition-transform duration-200 group-hover:translate-x-0.5"
+                    className="text-[0.78rem] transition-transform duration-200 group-hover:translate-x-1"
                     style={{ color: "var(--gold)" }}
                   >
                     →
                   </span>
                 </div>
               </div>
-            </motion.article>
+            </div>
+          </motion.div>
+        </a>
+
+        {/* Secondary articles */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          {articles.map((a, i) => (
+            // FIX: Wrapped each card in <a> tag — previously had cursor-pointer but no href, so clicking did nothing
+            <a
+              key={a.title}
+              href={a.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block"
+            >
+              <motion.article
+                initial={{ opacity: 0, y: 24 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.7, delay: 0.25 + i * 0.09, ease: [0.16, 1, 0.3, 1] }}
+                className="rounded-[var(--r-lg)] overflow-hidden group cursor-pointer transition-all duration-300 h-full"
+                style={{
+                  background: "var(--white)",
+                  border: "1px solid var(--border)",
+                  boxShadow: "var(--shadow-xs)",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.boxShadow = "var(--shadow-md)";
+                  (e.currentTarget as HTMLElement).style.transform = "translateY(-3px)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.boxShadow = "var(--shadow-xs)";
+                  (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+                }}
+              >
+                {/* Colour accent bar */}
+                <div
+                  className="h-[2px] w-full"
+                  style={{ background: "linear-gradient(to right, var(--gold), var(--gold-border))" }}
+                />
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <span
+                      className="text-[0.65rem] font-bold tracking-[0.14em] uppercase"
+                      style={{ color: "var(--gold)" }}
+                    >
+                      {a.tag}
+                    </span>
+                    <span
+                      className="text-[0.65rem]"
+                      style={{ color: "var(--muted)" }}
+                    >
+                      {a.readTime}
+                    </span>
+                  </div>
+                  <h4
+                    className="serif font-bold leading-snug mb-3 group-hover:text-[#b87010] transition-colors duration-200"
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "1.1rem",
+                      color: "var(--navy)",
+                    }}
+                  >
+                    {a.title}
+                  </h4>
+                  <p
+                    className="text-[0.82rem] leading-[1.75] mb-4"
+                    style={{ color: "var(--body)" }}
+                  >
+                    {a.excerpt}
+                  </p>
+                  <div className="flex items-center gap-1.5">
+                    <span
+                      className="text-[0.75rem] font-semibold"
+                      style={{ color: "var(--navy)" }}
+                    >
+                      Read more
+                    </span>
+                    <span
+                      className="text-[0.75rem] transition-transform duration-200 group-hover:translate-x-0.5"
+                      style={{ color: "var(--gold)" }}
+                    >
+                      →
+                    </span>
+                  </div>
+                </div>
+              </motion.article>
+            </a>
           ))}
         </div>
       </div>
