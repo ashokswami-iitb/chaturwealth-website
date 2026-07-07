@@ -284,7 +284,7 @@ export default function FounderSection() {
               style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
             >
               <a
-                href="https://www.linkedin.com/in/deveshchawla"
+                href="https://www.linkedin.com/in/devesh-chawla"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[6px] text-[0.75rem] font-semibold transition-all duration-300"
@@ -304,6 +304,8 @@ export default function FounderSection() {
               </a>
               <a
                 href="mailto:deveshchawla@chaturideas.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[6px] text-[0.75rem] font-semibold transition-all duration-300"
                 style={{
                   background: "rgba(255,255,255,0.06)",
