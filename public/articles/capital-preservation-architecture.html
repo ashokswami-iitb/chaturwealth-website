@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Architecture of Capital Preservation — Chatur Wealth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-900:#0a1626;
+    --navy:#0e1d33;
+    --ink:#1b2942;
+    --paper:#f7f3ea;
+    --paper-card:#fbf8f1;
+    --gold:#c9a227;
+    --gold-deep:#a8841c;
+    --gold-soft:rgba(201,162,39,.14);
+    --green:#5f9c43;
+    --loss:#b1422e;
+    --loss-soft:rgba(177,66,46,.12);
+    --text:#3a4355;
+    --text-soft:#6b7385;
+    --line:rgba(27,41,66,.12);
+    --line-dark:rgba(255,255,255,.10);
+    --display:'Playfair Display',Georgia,'Times New Roman',serif;
+    --body:'Source Sans 3',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    --shadow:0 18px 50px -28px rgba(14,29,51,.45);
+    --maxw:680px;
+    --maxw-wide:760px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--text);
+    font-family:var(--body);font-size:1.075rem;line-height:1.75;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+
+  .progress{position:fixed;top:0;left:0;height:3px;width:0%;
+    background:linear-gradient(90deg,var(--gold-deep),var(--gold));z-index:50;transition:width .08s linear;}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;background:var(--navy-900);color:#eef1f6;overflow:hidden;
+    padding:clamp(4.5rem,11vw,8rem) 1.4rem clamp(3.2rem,7vw,5rem);}
+  .hero::before{content:"";position:absolute;inset:0;
+    background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:46px 46px;
+    mask-image:radial-gradient(120% 90% at 30% 20%,#000 30%,transparent 80%);
+    -webkit-mask-image:radial-gradient(120% 90% at 30% 20%,#000 30%,transparent 80%);}
+  .hero .watermark{position:absolute;right:-3%;bottom:-22%;font-family:var(--display);font-weight:700;
+    font-size:clamp(16rem,34vw,30rem);line-height:.8;color:rgba(255,255,255,.028);letter-spacing:-.04em;pointer-events:none;user-select:none;}
+  .hero-inner{position:relative;max-width:860px;margin:0 auto;}
+  .eyebrow{font-family:var(--body);font-weight:600;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:inline-block;}
+  .hero h1{font-family:var(--display);font-weight:600;font-size:clamp(2.5rem,6.2vw,4.2rem);line-height:1.05;letter-spacing:-.01em;color:#fff;margin:.9rem 0 0;max-width:15ch;}
+  .hero .deck{font-size:clamp(1.05rem,2.3vw,1.28rem);line-height:1.65;color:#b9c2d2;margin:1.5rem 0 0;max-width:48ch;}
+  .hero .meta{margin-top:2.1rem;padding-top:1.3rem;border-top:1px solid var(--line-dark);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#7e8aa0;}
+  .hero .meta b{color:var(--gold);font-weight:600;}
+
+  /* ---------- article ---------- */
+  .block{max-width:var(--maxw);margin-left:auto;margin-right:auto;padding:0 1.4rem;}
+  .article{padding:clamp(2.8rem,6vw,4.4rem) 0 1rem;}
+  .lede{font-size:1.18rem;line-height:1.7;color:var(--ink);}
+  h2{font-family:var(--display);font-weight:600;color:var(--ink);font-size:clamp(1.6rem,3.6vw,2.3rem);line-height:1.18;letter-spacing:-.005em;margin:3.2rem 0 1.1rem;}
+  .article p{margin:0 0 1.35rem;}
+  .article p a{color:var(--gold-deep);}
+  em{font-style:italic;}
+  strong{color:var(--ink);font-weight:600;}
+  .kicker{font-family:var(--body);font-weight:600;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep);display:block;margin:3.2rem 0 .5rem;}
+  .kicker + h2{margin-top:.2rem;}
+
+  .pullquote{max-width:var(--maxw-wide);margin:3rem auto;padding:.2rem 0 .2rem 1.6rem;border-left:3px solid var(--gold);}
+  .pullquote p{font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(1.4rem,3vw,1.85rem);line-height:1.35;color:var(--ink);margin:0;}
+
+  /* ---------- module shell ---------- */
+  .module{max-width:var(--maxw-wide);margin:2.6rem auto;background:var(--paper-card);border:1px solid var(--line);
+    border-radius:16px;box-shadow:var(--shadow);padding:clamp(1.5rem,3.5vw,2.3rem);}
+  .module-tag{font-family:var(--body);font-weight:700;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);display:flex;align-items:center;gap:.55rem;}
+  .module-tag::before{content:"";width:18px;height:1px;background:var(--gold);display:inline-block;}
+  .module h3{font-family:var(--display);font-weight:600;color:var(--ink);font-size:clamp(1.3rem,2.6vw,1.6rem);line-height:1.25;margin:.7rem 0 .2rem;}
+  .module .sub{font-size:1rem;color:var(--text-soft);margin:.4rem 0 1.3rem;}
+
+  /* ---------- segmented buttons (shared) ---------- */
+  .seg{display:flex;flex-wrap:wrap;gap:.5rem;}
+  .seg button{font-family:var(--body);font-size:.92rem;font-weight:500;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:9px;padding:.55rem .9rem;cursor:pointer;transition:all .16s ease;line-height:1.3;}
+  .seg button:hover{border-color:var(--gold);}
+  .seg button[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy);}
+
+  /* ---------- stress test (signature) ---------- */
+  .stress-portfolios{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem;}
+  .pf{border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.15rem 1.25rem;background:#fff;}
+  .pf-name{font-family:var(--body);font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;}
+  .pf.a .pf-name{color:var(--loss);}
+  .pf.b .pf-name{color:var(--gold-deep);}
+  .pf-sub{font-size:.78rem;color:var(--text-soft);margin:.2rem 0 .9rem;line-height:1.3;}
+  .pf-val{font-family:var(--display);font-weight:700;font-size:clamp(1.4rem,3.4vw,1.9rem);color:var(--ink);line-height:1.05;}
+  .pf-hit{display:inline-block;margin-top:.45rem;font-size:.82rem;font-weight:700;color:var(--loss);background:var(--loss-soft);padding:.15rem .55rem;border-radius:20px;}
+  .pf-track{margin-top:.9rem;height:9px;border-radius:6px;background:var(--loss-soft);overflow:hidden;}
+  .pf-fill{height:100%;border-radius:6px;transition:width .55s cubic-bezier(.22,.61,.36,1);}
+  .pf.a .pf-fill{background:linear-gradient(90deg,#c8523c,var(--loss));}
+  .pf.b .pf-fill{background:linear-gradient(90deg,var(--gold),var(--gold-deep));}
+  .pf-cap{font-size:.74rem;color:var(--text-soft);margin-top:.5rem;}
+  .stress-verdict{margin-top:1.4rem;padding:1rem 1.15rem;border-radius:10px;background:var(--navy);color:#eef1f6;font-size:1.02rem;line-height:1.55;}
+  .stress-verdict b{color:var(--gold);font-weight:600;}
+
+  /* ---------- sizing lever ---------- */
+  .lever-readout{font-family:var(--display);font-size:2.4rem;font-weight:700;color:var(--ink);line-height:1;}
+  .lever-readout span{font-size:1.05rem;color:var(--text-soft);font-family:var(--body);font-weight:600;}
+  .lever-cap{font-size:.82rem;color:var(--text-soft);margin:.2rem 0 1rem;text-transform:uppercase;letter-spacing:.1em;}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:6px;
+    background:linear-gradient(90deg,var(--gold) 0%,var(--loss) 100%);outline:none;margin:.5rem 0 1.1rem;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;border-radius:50%;
+    background:var(--navy);border:3px solid #fff;box-shadow:0 2px 8px rgba(14,29,51,.4);cursor:pointer;}
+  input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--navy);
+    border:3px solid #fff;box-shadow:0 2px 8px rgba(14,29,51,.4);cursor:pointer;}
+  .lever-shock{margin:.2rem 0 1.3rem;}
+  .lever-shocklbl{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-deep);font-weight:700;margin-bottom:.5rem;}
+  .lever-bar-wrap{margin-top:.4rem;}
+  .lever-bar-track{height:30px;border-radius:8px;background:var(--loss-soft);overflow:hidden;position:relative;}
+  .lever-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-deep));width:100%;transition:width .35s cubic-bezier(.22,.61,.36,1);}
+  .lever-bar-cap{display:flex;justify-content:space-between;font-size:.78rem;color:var(--text-soft);margin-top:.45rem;}
+  .lever-verdict{margin-top:1.3rem;padding:1rem 1.15rem;border-radius:10px;background:var(--navy);color:#eef1f6;font-size:1.02rem;line-height:1.55;}
+  .lever-verdict b{color:var(--gold);font-weight:600;}
+
+  /* ---------- forecaster vs risk manager compare ---------- */
+  .compare{max-width:var(--maxw-wide);margin:2.4rem auto;display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  .comp-col{border-radius:14px;padding:1.3rem 1.3rem 1.5rem;}
+  .comp-col.forecast{background:rgba(14,29,51,.05);border:1px solid var(--line);}
+  .comp-col.riskmgr{background:var(--gold-soft);border:1px solid rgba(201,162,39,.3);}
+  .comp-h{font-family:var(--body);font-weight:700;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.9rem;}
+  .comp-col.forecast .comp-h{color:var(--text-soft);}
+  .comp-col.riskmgr .comp-h{color:var(--gold-deep);}
+  .comp-item{font-size:.98rem;line-height:1.45;color:var(--ink);padding:.6rem 0;border-top:1px solid rgba(27,41,66,.08);}
+  .comp-item:first-of-type{border-top:none;}
+  .comp-col.forecast .comp-item{color:#5c6577;font-style:italic;}
+
+  /* ---------- CTA + footer ---------- */
+  .cta{background:var(--navy-900);color:#fff;text-align:center;margin-top:4rem;padding:clamp(3.5rem,8vw,5.5rem) 1.4rem;position:relative;overflow:hidden;}
+  .cta::before{content:"";position:absolute;inset:0;
+    background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+    background-size:46px 46px;mask-image:radial-gradient(100% 100% at 50% 0%,#000 20%,transparent 75%);
+    -webkit-mask-image:radial-gradient(100% 100% at 50% 0%,#000 20%,transparent 75%);}
+  .cta-inner{position:relative;max-width:640px;margin:0 auto;}
+  .cta h2{color:#fff;margin:.6rem 0 1rem;border:none;}
+  .cta p{color:#b9c2d2;font-size:1.1rem;margin:0 auto 2rem;max-width:44ch;}
+  .cta-btn{display:inline-block;font-family:var(--body);font-weight:700;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--navy-900);background:var(--gold);padding:1.05rem 2.4rem;border-radius:6px;text-decoration:none;transition:transform .18s ease,box-shadow .18s ease,background .18s ease;}
+  .cta-btn:hover{transform:translateY(-2px);background:#dab63a;box-shadow:0 12px 30px -12px rgba(201,162,39,.6);}
+  footer{background:var(--navy-900);color:#6e7a90;padding:2rem 1.4rem 2.6rem;border-top:1px solid var(--line-dark);text-align:center;}
+  .foot-inner{max-width:680px;margin:0 auto;}
+  .foot-brand{font-family:var(--display);font-size:1rem;color:#cdd4e0;letter-spacing:.02em;}
+  .foot-brand b{color:var(--gold);font-weight:600;}
+  .disclaimer{font-size:.78rem;line-height:1.6;margin-top:.9rem;color:#5e6a80;}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  @media(max-width:640px){
+    body{font-size:1.02rem;}
+    .stress-portfolios{grid-template-columns:1fr;}
+    .compare{grid-template-columns:1fr;}
+    .seg button{flex:1 1 100%;}
+    .lever-readout{font-size:2.1rem;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important;}
+    .reveal{opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="watermark" aria-hidden="true">CW</div>
+  <div class="hero-inner">
+    <span class="eyebrow">Risk Management · Framework</span>
+    <h1>The Architecture of Capital Preservation</h1>
+    <p class="deck">The investors who last don't start with what a position could make them. They start with what it could cost them — and whether they'd survive it. This is how that question gets built into a portfolio: downside before upside, scenarios instead of forecasts, and rules that hold through every cycle.</p>
+    <div class="meta"><b>Chatur Wealth</b> &nbsp;·&nbsp; 8 Min Read &nbsp;·&nbsp; On Downside Before Upside</div>
+  </div>
+</header>
+
+<!-- ===================== ARTICLE ===================== -->
+<article class="article">
+
+  <div class="block reveal">
+    <p class="lede">Ask a new investor what they want from a position and they'll tell you what it might make them. Ask someone who has been through a few cycles and they'll tell you the opposite — what it might cost them, and whether they could live through that.</p>
+    <p>The order of those two questions is the entire subject. Everything that follows is just engineering once you've decided which one comes first.</p>
+    <p>Capital preservation has an image problem. It sounds like timidity, the posture of someone who has quietly given up on returns. In practice it's the reverse. It's the structure that lets you keep taking risk, year after year, without a single bad call removing you from the table. You cannot compound from zero. And you cannot compound from a hole so deep that climbing back out eats the very years you were investing for.</p>
+  </div>
+
+  <div class="pullquote reveal">
+    <p>Survival isn't the cautious choice. It's the only choice that keeps the others open.</p>
+  </div>
+
+  <div class="block reveal">
+    <span class="kicker">Scenarios, not forecasts</span>
+    <h2>Stop asking what will happen</h2>
+    <p>The instinct, when money is at stake, is to predict. Where's the market headed this year? Which sector runs next? Is this the bottom? These questions feel like the work, and the financial media is built to keep you asking them. But forecasting has a fatal flaw as a way to protect money: you don't control whether your forecast is right. You only control how exposed you are when it's wrong.</p>
+    <p>A good risk manager barely forecasts at all. They ask a different question, and they ask it about everything: <em>if I'm wrong about this, how bad is it — and can I survive the worst plausible version?</em> It's a less exciting question. It's also the only one with an answer you can actually act on.</p>
+  </div>
+
+  <div class="compare reveal">
+    <div class="comp-col forecast">
+      <div class="comp-h">The forecaster asks</div>
+      <div class="comp-item">"Where's the market headed this year?"</div>
+      <div class="comp-item">"Which stock is going to run next?"</div>
+      <div class="comp-item">"Is now a good time to buy?"</div>
+    </div>
+    <div class="comp-col riskmgr">
+      <div class="comp-h">The risk manager asks</div>
+      <div class="comp-item">"If I'm wrong, how much do I lose?"</div>
+      <div class="comp-item">"What would have to happen to ruin me?"</div>
+      <div class="comp-item">"Can I sit through the worst version of this?"</div>
+    </div>
+  </div>
+
+  <div class="block reveal">
+    <p>The difference isn't pessimism. It's that one set of questions depends on being right about the future, and the other doesn't. You can build a portfolio around the second set. You cannot build one around the first — you can only bet on it.</p>
+  </div>
+
+  <!-- ===== INTERACTIVE 1: stress test (signature) ===== -->
+  <div class="module reveal" id="stress">
+    <div class="module-tag">Run the stress test</div>
+    <h3>Don't predict the storm. Ask what survives it.</h3>
+    <p class="sub">Two portfolios, ₹1 crore each. One is concentrated, leveraged, and run on conviction. One is sized, diversified, and run on rules. Pick a shock — the same one hits both.</p>
+
+    <div class="seg" id="segScenario" role="group" aria-label="Choose a scenario" style="margin-bottom:.4rem;">
+      <button data-k="bear" aria-pressed="true">A −40% bear market</button>
+      <button data-k="zero" aria-pressed="false">Your best idea goes to zero</button>
+      <button data-k="income" aria-pressed="false">A "safe" income trade detonates</button>
+      <button data-k="freeze" aria-pressed="false">Liquidity freezes up</button>
+    </div>
+
+    <div class="stress-portfolios">
+      <div class="pf a">
+        <div class="pf-name">Concentrated · No rules</div>
+        <div class="pf-sub">60% in one conviction bet, some leverage</div>
+        <div class="pf-val" id="aVal">₹1,00,00,000</div>
+        <div class="pf-hit" id="aHit">0%</div>
+        <div class="pf-track"><div class="pf-fill" id="aFill" style="width:100%"></div></div>
+        <div class="pf-cap">Capital remaining</div>
+      </div>
+      <div class="pf b">
+        <div class="pf-name">Risk-architected</div>
+        <div class="pf-sub">Sized, diversified, cash buffer, no leverage</div>
+        <div class="pf-val" id="bVal">₹1,00,00,000</div>
+        <div class="pf-hit" id="bHit">0%</div>
+        <div class="pf-track"><div class="pf-fill" id="bFill" style="width:100%"></div></div>
+        <div class="pf-cap">Capital remaining</div>
+      </div>
+    </div>
+
+    <div class="stress-verdict" id="stressVerdict" role="status" aria-live="polite"></div>
+  </div>
+
+  <div class="block reveal">
+    <p>Notice what the second portfolio is <em>not</em> doing. It isn't predicting any of these events. It doesn't know which one is coming, and it doesn't need to. It's built so that no single shock can take more than a manageable bite — and that property holds whether the next crisis looks like the last one or like nothing anyone has seen. That's the difference between being right and being resilient. Forecasting aims for the first. Architecture delivers the second.</p>
+  </div>
+
+  <div class="block reveal">
+    <span class="kicker">The only lever that always works</span>
+    <h2>The size of the bet, not the quality of it</h2>
+    <p>Here is the lever almost nobody respects enough: position size. You don't control whether an investment works out. You don't control the news, the timing, or the thousand things that can go wrong with a thesis you've researched carefully. The one thing you fully control, before you've been proven right or wrong, is how much of your portfolio is riding on it.</p>
+    <p>This sounds obvious until you watch how people actually behave. The stronger the conviction, the bigger the position — which is precisely backwards, because conviction is exactly the feeling that precedes the worst blow-ups. A brilliant analyst who sizes carelessly will eventually be ruined by a single idea. A mediocre one who sizes well can be wrong over and over and still be standing. Move the slider and see why.</p>
+  </div>
+
+  <!-- ===== INTERACTIVE 2: sizing lever ===== -->
+  <div class="module reveal" id="lever">
+    <div class="module-tag">Move the lever</div>
+    <h3>What one position can do to the whole</h3>
+    <p class="sub">Set how much of your portfolio sits in your single biggest position, then choose how badly it goes wrong. The quality of the idea never changes here — only its size.</p>
+
+    <div class="lever-readout" id="leverOut">8<span>% in one position</span></div>
+    <div class="lever-cap">Your biggest single bet</div>
+    <input type="range" id="leverSlider" min="2" max="60" value="8" step="1" aria-label="Biggest position size">
+
+    <div class="lever-shock">
+      <div class="lever-shocklbl">…and it</div>
+      <div class="seg" id="segShock" role="group" aria-label="Shock severity">
+        <button data-s="0.5" aria-pressed="true">drops 50%</button>
+        <button data-s="0.8" aria-pressed="false">drops 80%</button>
+        <button data-s="1" aria-pressed="false">goes to zero</button>
+      </div>
+    </div>
+
+    <div class="lever-bar-wrap">
+      <div class="lever-bar-track"><div class="lever-bar-fill" id="leverFill" style="width:96%"></div></div>
+      <div class="lever-bar-cap"><span>Portfolio remaining</span><span id="leverRemain">96%</span></div>
+    </div>
+
+    <div class="lever-verdict" id="leverVerdict" role="status" aria-live="polite"></div>
+  </div>
+
+  <div class="block reveal">
+    <p>Same idea, same conviction, every time. The only thing that moved was how much you put behind it — and that alone decided whether being wrong is a story you tell later or one that ends the chapter. This is why sizing rules, set in advance, do more for capital preservation than any amount of analysis. They cap the damage of your worst judgment before you've made it.</p>
+  </div>
+
+  <div class="pullquote reveal">
+    <p>The size of the bet, not the cleverness of it, is what decides whether being wrong is a lesson or an ending.</p>
+  </div>
+
+  <div class="block reveal">
+    <span class="kicker">The diversification that isn't</span>
+    <h2>Owning ten things that fall together</h2>
+    <p>Most portfolios that call themselves diversified aren't. Ten stocks in the same handful of sectors, all sensitive to the same interest-rate move, the same consumer, the same cycle — that's one bet wearing ten costumes. It looks spread out on a pie chart and behaves like a single position on the day it matters.</p>
+    <p>This is the cruel mechanic of a real crisis: correlations converge. Things that drifted along independently for years suddenly drop in unison, because in a panic everyone sells whatever they can, not whatever they should. Diversification that only works in calm markets isn't diversification; it's decoration. The kind that earns its keep is built around holdings that respond to genuinely different forces — and it treats cash not as a failure to be invested, but as a position with a job: optionality, and the ability to act when everyone else is forced to sell.</p>
+  </div>
+
+  <div class="block reveal">
+    <span class="kicker">The quiet killer</span>
+    <h2>Leverage turns a bad year into a final one</h2>
+    <p>If you study how capable, intelligent investors actually blow up, the same ingredient shows up again and again. It's rarely a stupid thesis. It's leverage. Borrowed money does something specific and dangerous: it removes your ability to be patient. A drawdown you could have simply waited out becomes a margin call that forces you to sell at the exact bottom, crystallising a temporary loss into a permanent one.</p>
+    <p>Leverage is seductive precisely because it works beautifully right up until it doesn't. It flatters returns in the good years and makes the disciplined investor next to you look timid. Then one bad stretch arrives, and the same multiplier that amplified the gains amplifies the losses past the point of recovery. Capital that isn't borrowed can wait. Capital that is borrowed runs on someone else's clock — and that clock always seems to strike at the worst possible moment.</p>
+  </div>
+
+  <div class="block reveal">
+    <span class="kicker">Pennies and steamrollers</span>
+    <h2>Beware the strategy that wins small and loses everything</h2>
+    <p>There's a particular shape of strategy that fools almost everyone: the kind that produces steady, satisfying gains for a long time and then gives it all back, and more, in a single event. Selling insurance against a crash you don't believe will come. Reaching for an extra bit of yield from something that's quietly far riskier than it pays. Income that looks dependable for years because the rare, ruinous outcome simply hasn't happened yet.</p>
+    <p>The numbers on these look wonderful — until the steamroller arrives. The job of a risk framework isn't to predict when that happens. It's to refuse the trade whose worst case is catastrophic, no matter how attractive its typical case looks. A good outcome that you can't survive the bad version of is not a good outcome. It's a delayed accident.</p>
+  </div>
+
+  <div class="block reveal">
+    <span class="kicker">Why rules, and why systematic</span>
+    <h2>The protection has to hold when you can't</h2>
+    <p>Every principle here — size before conviction, diversify by behaviour, no leverage, refuse the catastrophic tail — is simple to state and brutal to follow in the moment. The day you most need your sizing rule is the day a position is soaring and every instinct says to add to it. The day you most need your exit is the day the loss feels temporary and selling feels like surrender.</p>
+    <p>That's the whole case for making these rules systematic rather than discretionary. Not because judgment doesn't matter — building the framework is nothing but judgment — but because the framework has to keep working on the days your judgment is compromised by fear or greed. A rule decided in a calm room, and then followed without renegotiation, is worth more in a crisis than the finest analysis produced in the middle of one. Protection that depends on you being calm precisely when you're least calm isn't protection at all.</p>
+  </div>
+
+  <div class="block reveal">
+    <span class="kicker">The point of all of it</span>
+    <h2>Boring scaffolding, durable wealth</h2>
+    <p>None of this is exciting. Capital preservation produces no good stories at dinner — its successes are the disasters that quietly never happened. But it is the scaffolding behind every fortune that actually lasted, and the missing piece behind most that didn't. The investors who compound for decades are almost never the ones who were brilliant once. They're the ones who were never wrong in a way they couldn't come back from.</p>
+    <p>That's the architecture: downside considered before upside, exposure sized so no single event is fatal, diversification that holds when it's tested, leverage refused, catastrophic bets declined, and the whole thing run on rules that don't need you to be at your best when it counts most.</p>
+    <p>This is the foundation we build on at <strong>Chatur Wealth</strong> — protecting capital first, through every cycle, so that compounding has the one thing it truly requires: time, and an account that's still there to use it. The returns take care of themselves once survival is no longer in question. Getting that order right is most of the job.</p>
+  </div>
+
+</article>
+
+<!-- ===================== CTA ===================== -->
+<section class="cta">
+  <div class="cta-inner">
+    <span class="eyebrow">Chatur Wealth</span>
+    <h2>Build the downside in first.</h2>
+    <p>If you'd rather your portfolio were engineered to survive what you can't predict than to bet on what you can, that's a conversation worth having.</p>
+    <a class="cta-btn" href="https://chaturwealth.com/#contact">Start the conversation</a>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand"><b>Chatur</b> Wealth</div>
+    <p class="disclaimer">This article is for educational purposes only and is not investment advice or a recommendation to buy or sell any security. All figures and scenarios are hypothetical and illustrative; they do not represent the past or expected performance of any strategy or account. Investing involves risk, including the possible loss of capital.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* progress */
+  var bar=document.getElementById('progress');
+  function onScroll(){var h=document.documentElement;var max=h.scrollHeight-h.clientHeight;
+    bar.style.width=(max>0?(h.scrollTop||document.body.scrollTop)/max*100:0)+'%';}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  /* reveal */
+  var reveals=document.querySelectorAll('.reveal');
+  if(reduce||!('IntersectionObserver' in window)){reveals.forEach(function(el){el.classList.add('in');});}
+  else{var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+    reveals.forEach(function(el){io.observe(el);});}
+
+  /* shared: single-select segmented group */
+  function wireSeg(groupId,onChange){
+    document.querySelectorAll('#'+groupId+' button').forEach(function(b){
+      b.addEventListener('click',function(){
+        document.querySelectorAll('#'+groupId+' button').forEach(function(x){x.setAttribute('aria-pressed','false');});
+        b.setAttribute('aria-pressed','true'); onChange();
+      });
+    });
+  }
+  function pick(groupId){ return document.querySelector('#'+groupId+' button[aria-pressed="true"]'); }
+
+  var START=10000000; // 1 crore
+  function inr(v){ return '₹'+new Intl.NumberFormat('en-IN',{maximumFractionDigits:0}).format(Math.round(v)); }
+
+  /* ---------- stress test ---------- */
+  var scen={
+    bear:{a:.38,b:.17,v:"A broad bear market takes a third off the concentrated book — it's almost all equity, and leverage deepens the cut. The architected one bends but holds: the defensive sleeve and cash do their job. Same storm, very different damage."},
+    zero:{a:.60,b:.09,v:"The single best idea fails completely. For the concentrated book that's <b>60% of everything</b> — a wound it may never recover from. The architected book capped that same idea at a sliver, so a total loss is a bruise, not a burial. This is position sizing, in one picture."},
+    income:{a:.45,b:.06,v:"The trade everyone called safe blows up — the classic tail event. The concentrated book had leveraged into the \u201csure thing.\u201d The architected one held a small, capped position, because nothing is allowed to be big just because it looks calm."},
+    freeze:{a:.50,b:.08,v:"Markets seize and you can't sell what you want at a price you'd accept. The leveraged book gets a margin call and is forced to dump at the bottom. The architected one isn't forced to do anything — the cash buffer means it sells nothing it doesn't choose to."}
+  };
+  function fmtPct(x){ return (Math.round(x*1000)/10).toString().replace(/\.0$/,''); }
+  function renderStress(){
+    var k=pick('segScenario').dataset.k, s=scen[k];
+    var aRem=1-s.a, bRem=1-s.b;
+    document.getElementById('aVal').textContent=inr(START*aRem);
+    document.getElementById('bVal').textContent=inr(START*bRem);
+    document.getElementById('aHit').textContent='\u2212'+fmtPct(s.a)+'%';
+    document.getElementById('bHit').textContent='\u2212'+fmtPct(s.b)+'%';
+    document.getElementById('aFill').style.width=(aRem*100)+'%';
+    document.getElementById('bFill').style.width=(bRem*100)+'%';
+    document.getElementById('stressVerdict').innerHTML=s.v;
+  }
+  wireSeg('segScenario',renderStress);
+  renderStress();
+
+  /* ---------- sizing lever ---------- */
+  var slider=document.getElementById('leverSlider');
+  function renderLever(){
+    var size=parseInt(slider.value,10);
+    var shock=parseFloat(pick('segShock').dataset.s);
+    var hit=size*shock;                 // % of total portfolio lost
+    var remain=Math.max(0,100-hit);
+    document.getElementById('leverOut').innerHTML=size+'<span>% in one position</span>';
+    document.getElementById('leverFill').style.width=remain+'%';
+    document.getElementById('leverRemain').textContent=(Math.round(remain*10)/10).toString().replace(/\.0$/,'')+'%';
+    var v, h=hit;
+    if(h<=5){ v='A \u2212'+ (Math.round(h*10)/10) +'% scratch. You\u2019ll have forgotten it by next quarter.'; }
+    else if(h<=15){ v='A real \u2212'+(Math.round(h*10)/10)+'% dent \u2014 the kind a normal year quietly erases.'; }
+    else if(h<=30){ v='Now it hurts: \u2212'+(Math.round(h*10)/10)+'%. That\u2019s time you can\u2019t get back, lost to one position.'; }
+    else { v='This is the hole that changes the plan: \u2212'+(Math.round(h*10)/10)+'%. No single idea should ever be allowed to do this to you.'; }
+    document.getElementById('leverVerdict').innerHTML='<b>Portfolio impact:</b> '+v;
+  }
+  slider.addEventListener('input',renderLever);
+  wireSeg('segShock',renderLever);
+  renderLever();
+})();
+</script>
+</body>
+</html>

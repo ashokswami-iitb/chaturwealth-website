@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Is Algo Trading? A Primer for Serious Investors — Chatur Wealth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-900:#0a1626;
+    --navy:#0e1d33;
+    --ink:#1b2942;
+    --paper:#f7f3ea;
+    --paper-card:#fbf8f1;
+    --gold:#c9a227;
+    --gold-deep:#a8841c;
+    --gold-soft:rgba(201,162,39,.14);
+    --green:#5f9c43;
+    --loss:#b1422e;
+    --loss-soft:rgba(177,66,46,.12);
+    --text:#3a4355;
+    --text-soft:#6b7385;
+    --line:rgba(27,41,66,.12);
+    --line-dark:rgba(255,255,255,.10);
+    --display:'Playfair Display',Georgia,'Times New Roman',serif;
+    --body:'Source Sans 3',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    --shadow:0 18px 50px -28px rgba(14,29,51,.45);
+    --maxw:680px;
+    --maxw-wide:760px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;background:var(--paper);color:var(--text);
+    font-family:var(--body);font-size:1.075rem;line-height:1.75;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  }
+
+  .progress{position:fixed;top:0;left:0;height:3px;width:0%;
+    background:linear-gradient(90deg,var(--gold-deep),var(--gold));z-index:50;transition:width .08s linear;}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;background:var(--navy-900);color:#eef1f6;overflow:hidden;
+    padding:clamp(4.5rem,11vw,8rem) 1.4rem clamp(3.2rem,7vw,5rem);}
+  .hero::before{content:"";position:absolute;inset:0;
+    background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:46px 46px;
+    mask-image:radial-gradient(120% 90% at 30% 20%,#000 30%,transparent 80%);
+    -webkit-mask-image:radial-gradient(120% 90% at 30% 20%,#000 30%,transparent 80%);}
+  .hero .watermark{position:absolute;right:-3%;bottom:-22%;font-family:var(--display);font-weight:700;
+    font-size:clamp(16rem,34vw,30rem);line-height:.8;color:rgba(255,255,255,.028);letter-spacing:-.04em;pointer-events:none;user-select:none;}
+  .hero-inner{position:relative;max-width:860px;margin:0 auto;}
+  .eyebrow{font-family:var(--body);font-weight:600;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:inline-block;}
+  .hero h1{font-family:var(--display);font-weight:600;font-size:clamp(2.5rem,6.2vw,4.2rem);line-height:1.05;letter-spacing:-.01em;color:#fff;margin:.9rem 0 0;max-width:16ch;}
+  .hero .deck{font-size:clamp(1.05rem,2.3vw,1.28rem);line-height:1.65;color:#b9c2d2;margin:1.5rem 0 0;max-width:48ch;}
+  .hero .meta{margin-top:2.1rem;padding-top:1.3rem;border-top:1px solid var(--line-dark);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#7e8aa0;}
+  .hero .meta b{color:var(--gold);font-weight:600;}
+
+  /* ---------- article ---------- */
+  .block{max-width:var(--maxw);margin-left:auto;margin-right:auto;padding:0 1.4rem;}
+  .article{padding:clamp(2.8rem,6vw,4.4rem) 0 1rem;}
+  .lede{font-size:1.18rem;line-height:1.7;color:var(--ink);}
+  h2{font-family:var(--display);font-weight:600;color:var(--ink);font-size:clamp(1.6rem,3.6vw,2.3rem);line-height:1.18;letter-spacing:-.005em;margin:3.2rem 0 1.1rem;}
+  .article p{margin:0 0 1.35rem;}
+  .article p a{color:var(--gold-deep);}
+  em{font-style:italic;}
+  strong{color:var(--ink);font-weight:600;}
+  .kicker{font-family:var(--body);font-weight:600;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep);display:block;margin:3.2rem 0 .5rem;}
+  .kicker + h2{margin-top:.2rem;}
+
+  .pullquote{max-width:var(--maxw-wide);margin:3rem auto;padding:.2rem 0 .2rem 1.6rem;border-left:3px solid var(--gold);}
+  .pullquote p{font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(1.4rem,3vw,1.85rem);line-height:1.35;color:var(--ink);margin:0;}
+
+  /* ---------- module shell ---------- */
+  .module{max-width:var(--maxw-wide);margin:2.6rem auto;background:var(--paper-card);border:1px solid var(--line);
+    border-radius:16px;box-shadow:var(--shadow);padding:clamp(1.5rem,3.5vw,2.3rem);}
+  .module-tag{font-family:var(--body);font-weight:700;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);display:flex;align-items:center;gap:.55rem;}
+  .module-tag::before{content:"";width:18px;height:1px;background:var(--gold);display:inline-block;}
+  .module h3{font-family:var(--display);font-weight:600;color:var(--ink);font-size:clamp(1.3rem,2.6vw,1.6rem);line-height:1.25;margin:.7rem 0 .2rem;}
+  .module .sub{font-size:1rem;color:var(--text-soft);margin:.4rem 0 1.3rem;}
+
+  /* ---------- reaction test ---------- */
+  .react-zone{
+    width:100%;min-height:170px;border-radius:12px;border:2px dashed var(--line);
+    background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;
+    cursor:pointer;text-align:center;padding:1.5rem;transition:background .12s ease,border-color .12s ease;user-select:none;
+  }
+  .react-zone .rz-big{font-family:var(--display);font-size:1.5rem;font-weight:600;color:var(--ink);line-height:1.2;}
+  .react-zone .rz-small{font-size:.95rem;color:var(--text-soft);}
+  .react-zone.waiting{background:var(--navy);border-color:var(--navy);}
+  .react-zone.waiting .rz-big,.react-zone.waiting .rz-small{color:#cdd4e0;}
+  .react-zone.go{background:var(--gold);border-color:var(--gold);border-style:solid;}
+  .react-zone.go .rz-big{color:var(--navy-900);}
+  .react-zone.go .rz-small{color:#5c4a10;}
+  .react-zone.early{background:var(--loss-soft);border-color:var(--loss);}
+  .react-zone.early .rz-big{color:var(--loss);}
+  .react-result{margin-top:1.2rem;padding:1.05rem 1.15rem;border-radius:10px;background:var(--navy);color:#eef1f6;font-size:1.02rem;line-height:1.55;
+    max-height:0;opacity:0;overflow:hidden;padding-top:0;padding-bottom:0;transition:max-height .4s ease,opacity .35s ease,padding .35s ease;}
+  .react-result.show{max-height:260px;opacity:1;padding-top:1.05rem;padding-bottom:1.05rem;}
+  .react-result b{color:var(--gold);font-weight:600;}
+
+  /* ---------- rule composer (signature) ---------- */
+  .comp-row{margin-bottom:1.1rem;}
+  .comp-lbl{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);font-weight:700;margin-bottom:.5rem;}
+  .seg{display:flex;flex-wrap:wrap;gap:.5rem;}
+  .seg button{font-family:var(--body);font-size:.92rem;font-weight:500;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:9px;padding:.5rem .85rem;cursor:pointer;transition:all .16s ease;line-height:1.3;}
+  .seg button:hover{border-color:var(--gold);}
+  .seg button[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .rule-output{margin-top:1.6rem;background:var(--navy-900);border-radius:12px;padding:1.4rem 1.5rem;}
+  .rule-output .rule-text{font-family:var(--display);font-size:clamp(1.15rem,2.4vw,1.45rem);line-height:1.45;color:#fff;}
+  .rule-output .rule-text .hl{color:var(--gold);font-style:italic;}
+  .rule-note{margin-top:1rem;font-size:.98rem;line-height:1.55;color:var(--text);}
+  .rule-note b{color:var(--ink);}
+
+  /* ---------- myth cards ---------- */
+  .myth-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.9rem;margin-top:.4rem;}
+  .myth-card{text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:1.1rem 1.05rem;cursor:pointer;
+    font-family:var(--body);transition:border-color .18s ease,transform .18s ease,box-shadow .18s ease;}
+  .myth-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:var(--shadow);}
+  .myth-flag{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--loss);font-weight:700;}
+  .myth-name{display:block;font-family:var(--display);font-weight:600;color:var(--ink);font-size:1.12rem;margin:.3rem 0 .55rem;line-height:1.2;}
+  .myth-hint{font-size:.82rem;color:var(--text-soft);display:flex;align-items:center;gap:.4rem;}
+  .myth-chev{transition:transform .25s ease;display:inline-block;color:var(--gold-deep);}
+  .myth-body{max-height:0;opacity:0;overflow:hidden;font-size:.95rem;line-height:1.55;color:var(--text);transition:max-height .4s ease,opacity .3s ease,margin .3s ease;margin-top:0;}
+  .myth-card.open{border-color:var(--gold);}
+  .myth-card.open .myth-body{max-height:320px;opacity:1;margin-top:.7rem;}
+  .myth-card.open .myth-chev{transform:rotate(90deg);}
+  .myth-card.open .myth-hint .hint-text{display:none;}
+  .myth-body .reality{color:var(--ink);font-weight:600;}
+
+  /* ---------- CTA + footer ---------- */
+  .cta{background:var(--navy-900);color:#fff;text-align:center;margin-top:4rem;padding:clamp(3.5rem,8vw,5.5rem) 1.4rem;position:relative;overflow:hidden;}
+  .cta::before{content:"";position:absolute;inset:0;
+    background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+    background-size:46px 46px;mask-image:radial-gradient(100% 100% at 50% 0%,#000 20%,transparent 75%);
+    -webkit-mask-image:radial-gradient(100% 100% at 50% 0%,#000 20%,transparent 75%);}
+  .cta-inner{position:relative;max-width:640px;margin:0 auto;}
+  .cta h2{color:#fff;margin:.6rem 0 1rem;border:none;}
+  .cta p{color:#b9c2d2;font-size:1.1rem;margin:0 auto 2rem;max-width:44ch;}
+  .cta-btn{display:inline-block;font-family:var(--body);font-weight:700;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--navy-900);background:var(--gold);padding:1.05rem 2.4rem;border-radius:6px;text-decoration:none;transition:transform .18s ease,box-shadow .18s ease,background .18s ease;}
+  .cta-btn:hover{transform:translateY(-2px);background:#dab63a;box-shadow:0 12px 30px -12px rgba(201,162,39,.6);}
+  footer{background:var(--navy-900);color:#6e7a90;padding:2rem 1.4rem 2.6rem;border-top:1px solid var(--line-dark);text-align:center;}
+  .foot-inner{max-width:680px;margin:0 auto;}
+  .foot-brand{font-family:var(--display);font-size:1rem;color:#cdd4e0;letter-spacing:.02em;}
+  .foot-brand b{color:var(--gold);font-weight:600;}
+  .disclaimer{font-size:.78rem;line-height:1.6;margin-top:.9rem;color:#5e6a80;}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  @media(max-width:640px){
+    body{font-size:1.02rem;}
+    .myth-grid{grid-template-columns:1fr;}
+    .seg button{flex:1 1 100%;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important;}
+    .reveal{opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="watermark" aria-hidden="true">CW</div>
+  <div class="hero-inner">
+    <span class="eyebrow">Education · Primer</span>
+    <h1>What Is Algo Trading?</h1>
+    <p class="deck">Strip away the data centres and the get-rich-quick bots, and algorithmic trading turns out to be something far plainer — and far more useful to a long-term investor — than the word suggests. Here's what it actually is, what it isn't, and why it might matter to you.</p>
+    <div class="meta"><b>Chatur Wealth</b> &nbsp;·&nbsp; 6 Min Read &nbsp;·&nbsp; A Primer For Serious Investors</div>
+  </div>
+</header>
+
+<!-- ===================== ARTICLE ===================== -->
+<article class="article">
+
+  <div class="block reveal">
+    <p class="lede">Say "algorithmic trading" out loud and most people picture one of two things.</p>
+    <p>Either a row of servers in a New Jersey data centre racing each other through microwave towers for a few millionths of a second — the world of high-frequency trading. Or some confident stranger on a messaging app selling a "bot" that supposedly turns ₹50,000 into ₹5 lakh while you sleep.</p>
+    <p>Neither of those is what we're talking about. One is a specialised arms race you weren't invited to and don't need to join. The other is a scam with a better logo.</p>
+    <p>Clear away the mystique and an algorithm is almost embarrassingly simple: <strong>a set of rules a computer follows exactly, every time, without getting tired, bored, hopeful, or scared.</strong> That's the whole idea. The interesting part was never the computer. It's the part that comes after "without."</p>
+  </div>
+
+  <!-- ===== INTERACTIVE 1: reaction test ===== -->
+  <div class="module reveal" id="react">
+    <div class="module-tag">Test yourself</div>
+    <h3>First, let's bury the myth that this is about speed</h3>
+    <p class="sub">Click the box to start. Wait for it to turn gold — then click as fast as you can.</p>
+    <div class="react-zone" id="rzone" role="button" tabindex="0" aria-label="Reaction test. Click to begin.">
+      <div class="rz-big" id="rzBig">Click to begin</div>
+      <div class="rz-small" id="rzSmall">We'll measure how fast you react</div>
+    </div>
+    <div class="react-result" id="rzResult" role="status" aria-live="polite"></div>
+  </div>
+
+  <div class="block reveal">
+    <p>Whatever number you got, a machine reacts in roughly <strong>one millisecond</strong> — a few hundred times faster than you just did. That feels like the point. It isn't, at least not for you. Speed is the entire game for high-frequency firms, and they've already won it; you will never out-click them and you have no reason to try.</p>
+    <p>If you're investing over years, the gap between one millisecond and three hundred is meaningless. What matters is the thing the test only hinted at: that machine would react <em>exactly the same way</em> on the thousandth try, at three in the morning, the day after a painful loss, with the news screaming at it. You wouldn't. None of us would. <strong>That</strong> is the real difference, and it's the one worth building around.</p>
+  </div>
+
+  <div class="block reveal">
+    <span class="kicker">What it actually is</span>
+    <h2>You may already be running one</h2>
+    <p>Here's a version of algorithmic investing you might already practise. If you put a fixed amount into an index fund on the first of every month — whether the market is euphoric or in free-fall — you are executing an algorithm. A simple one: <em>on this date, buy this much, ignore the headlines.</em> But a real one. You made the decision once, calmly, and took your in-the-moment self out of having to make it again.</p>
+    <p>That's the quiet truth behind the jargon. Most disciplined investors are already systematic; they've just never used the word. Formal algo trading only extends the same logic: take the decisions you'd want to make on your best, calmest day, write them down precisely, and let something that doesn't have moods carry them out.</p>
+  </div>
+
+  <!-- ===== INTERACTIVE 2: rule composer (signature) ===== -->
+  <div class="module reveal" id="composer">
+    <div class="module-tag">Build one yourself</div>
+    <h3>This is what a "precise instruction" looks like</h3>
+    <p class="sub">No code, no black box. Pick one option from each row and watch a real rule assemble itself.</p>
+
+    <div class="comp-row">
+      <div class="comp-lbl">When…</div>
+      <div class="seg" id="segTrigger" role="group" aria-label="Trigger">
+        <button data-v="a holding falls 10% below what you paid" aria-pressed="true">a holding drops 10%</button>
+        <button data-v="your equity weighting drifts past 70% of the portfolio" aria-pressed="false">equity drifts past 70%</button>
+        <button data-v="it's the first trading day of the month" aria-pressed="false">it's the 1st of the month</button>
+        <button data-v="an index closes below its 200-day average" aria-pressed="false">an index breaks its 200-day line</button>
+      </div>
+    </div>
+
+    <div class="comp-row">
+      <div class="comp-lbl">…then</div>
+      <div class="seg" id="segAction" role="group" aria-label="Action">
+        <button data-v="exit the position at once" data-k="exit" aria-pressed="true">exit the position</button>
+        <button data-v="trim it back to its target weight" data-k="trim" aria-pressed="false">trim to target</button>
+        <button data-v="buy a fixed amount regardless of the news" data-k="buy" aria-pressed="false">buy a fixed amount</button>
+        <button data-v="rebalance back toward the plan" data-k="reb" aria-pressed="false">rebalance to plan</button>
+      </div>
+    </div>
+
+    <div class="comp-row">
+      <div class="comp-lbl">…but never</div>
+      <div class="seg" id="segGuard" role="group" aria-label="Guardrail">
+        <button data-v="override the rule because this time feels different" aria-pressed="true">override it on a feeling</button>
+        <button data-v="risk more than 2% of the portfolio on it" aria-pressed="false">risk over 2% on one bet</button>
+        <button data-v="act on a single day's noise" aria-pressed="false">react to one day's noise</button>
+      </div>
+    </div>
+
+    <div class="rule-output">
+      <div class="rule-text" id="ruleText"></div>
+    </div>
+    <p class="rule-note" id="ruleNote"></p>
+  </div>
+
+  <div class="block reveal">
+    <p>That's it. That's an algorithm. A decision you made once, while calm, now enforced every time so you never have to relitigate it in the moment — which, as any honest investor will tell you, is the moment you're least equipped to decide.</p>
+  </div>
+
+  <div class="pullquote reveal">
+    <p>A computer doesn't follow rules because it's clever. It follows them because it can't talk itself out of them.</p>
+  </div>
+
+  <div class="block reveal">
+    <span class="kicker">Why it works</span>
+    <h2>Not smarter — just steadier, and always watching</h2>
+    <p>A system doesn't beat you because it's more intelligent. It beats you on three unglamorous fronts. It is perfectly consistent: the rule that fires on Monday fires identically in a crash. It never gets emotional: it has no ego invested in being right and no fear of being wrong. And it never sleeps: it can watch hundreds of positions, across every session, without losing focus or getting bored — something no human desk can sustain.</p>
+    <p>Strip those three together and you've described the exact list of places where human investors reliably fail. The machine isn't adding genius. It's removing the failure points.</p>
+  </div>
+
+  <div class="block reveal">
+    <span class="kicker">What it is not</span>
+    <h2>Five things people get wrong</h2>
+    <p>Most of the confusion around this topic comes from a handful of stubborn myths. Tap each one.</p>
+  </div>
+
+  <!-- ===== INTERACTIVE 3: myth cards ===== -->
+  <div class="block reveal">
+    <div class="myth-grid">
+      <button class="myth-card" aria-expanded="false">
+        <span class="myth-flag">Myth</span>
+        <span class="myth-name">"It's just high-frequency trading"</span>
+        <span class="myth-hint"><span class="hint-text">Tap to bust it</span><span class="myth-chev">›</span></span>
+        <div class="myth-body"><span class="reality">Different sport entirely.</span> HFT is a tiny, specialised corner racing for microseconds. A systematic investing strategy might hold a position for months. Same family tree, completely different game.</div>
+      </button>
+      <button class="myth-card" aria-expanded="false">
+        <span class="myth-flag">Myth</span>
+        <span class="myth-name">"It's a bot that prints money"</span>
+        <span class="myth-hint"><span class="hint-text">Tap to bust it</span><span class="myth-chev">›</span></span>
+        <div class="myth-body"><span class="reality">If it existed, it would stop working.</span> Any rule that reliably minted money with no risk would attract enough capital to erase its own edge within weeks. Anyone selling you certainty is selling you, not a strategy.</div>
+      </button>
+      <button class="myth-card" aria-expanded="false">
+        <span class="myth-flag">Myth</span>
+        <span class="myth-name">"It's a black box nobody understands"</span>
+        <span class="myth-hint"><span class="hint-text">Tap to bust it</span><span class="myth-chev">›</span></span>
+        <div class="myth-body"><span class="reality">A good system is the opposite.</span> Every rule in it should be explainable in a sentence. If no one can tell you why it does what it does, that isn't sophistication — it's a warning sign.</div>
+      </button>
+      <button class="myth-card" aria-expanded="false">
+        <span class="myth-flag">Myth</span>
+        <span class="myth-name">"Set it and forget it — it's risk-free"</span>
+        <span class="myth-hint"><span class="hint-text">Tap to bust it</span><span class="myth-chev">›</span></span>
+        <div class="myth-body"><span class="reality">No rule lives forever.</span> Markets shift and strategies decay. The work doesn't disappear; it moves — to monitoring, stress-testing, and knowing when a rule has quietly stopped making sense.</div>
+      </button>
+      <button class="myth-card" aria-expanded="false">
+        <span class="myth-flag">Myth</span>
+        <span class="myth-name">"You need to be a programmer"</span>
+        <span class="myth-hint"><span class="hint-text">Tap to bust it</span><span class="myth-chev">›</span></span>
+        <div class="myth-body"><span class="reality">The thinking matters more than the code.</span> Deciding what's worth doing and which risks are worth taking is judgment, not syntax. The code is the easy half; the hard half is knowing what to tell it.</div>
+      </button>
+    </div>
+  </div>
+
+  <div class="block reveal">
+    <span class="kicker">Where the real difficulty is</span>
+    <h2>Writing the rule is easy. The rest isn't.</h2>
+    <p>If a rule is just an if-this-then-that, why doesn't everyone succeed at this? Because the difficulty lives in three places that have nothing to do with the writing.</p>
+    <p>The first is that the rule has to carry a genuine edge, and most don't — they merely describe the recent past. It's trivially easy to invent a rule that would have made a fortune over the last ten years. The trouble is the future rarely reruns the last ten years. Practitioners call this <em>curve-fitting</em>, and it's the most common way systematic strategies quietly fail: they've memorised history instead of understanding it.</p>
+    <p>The second is leaving a good rule alone. The urge to override it — <em>this time is obviously different</em> — is precisely the emotional interference the system was built to remove. Tinkering with a sound rule mid-drawdown is how people turn a system back into gut feel without noticing.</p>
+    <p>The third is knowing when the world has actually changed. A rule that worked for a decade can stop working, and telling the difference between a normal rough patch and a genuinely broken strategy is the real skill here. That's judgment — and it never gets automated away.</p>
+  </div>
+
+  <div class="block reveal">
+    <span class="kicker">Is it for you?</span>
+    <h2>The honest answer</h2>
+    <p>None of this is about being clever, and that's the part newcomers find hardest to accept. Systematic investing doesn't win by out-thinking the market in real time. It wins by removing the least reliable component in the whole process — which is usually you. Not because you aren't smart, but because almost nobody makes calm decisions about their own money while it's moving.</p>
+    <p>So here's the test. If you already suspect that your worst investing decisions came from your emotions rather than your analysis, you've understood the entire case for it. The point of a system isn't to make you superhuman. It's to stop you being the weak link on the days that matter most.</p>
+    <p>That's all algorithmic trading really is, once you clear away the towers and the bots: decisions made carefully in advance, then carried out faithfully, without you in the way at the worst possible moment. The technology is simply what makes the <em>faithfully</em> part possible.</p>
+    <p>At <strong>Chatur Wealth</strong>, this is the ground we build on — process over prediction, rules over impulses, and the unremarkable discipline that tends to compound quietly while flashier approaches blow up loudly. Not because it's exciting. Because it lasts.</p>
+  </div>
+
+</article>
+
+<!-- ===================== CTA ===================== -->
+<section class="cta">
+  <div class="cta-inner">
+    <span class="eyebrow">Chatur Wealth</span>
+    <h2>Curious whether a systematic approach fits you?</h2>
+    <p>If removing yourself as the weak link sounds like the right way to invest, that's a conversation worth having.</p>
+    <a class="cta-btn" href="https://chaturwealth.com/#contact">Start the conversation</a>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand"><b>Chatur</b> Wealth</div>
+    <p class="disclaimer">This article is for educational purposes only and is not investment advice or a recommendation to buy or sell any security. Examples are illustrative and simplified; they are not strategies to be implemented as written. Investing involves risk, including the possible loss of capital.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* progress */
+  var bar=document.getElementById('progress');
+  function onScroll(){var h=document.documentElement;var max=h.scrollHeight-h.clientHeight;
+    bar.style.width=(max>0?(h.scrollTop||document.body.scrollTop)/max*100:0)+'%';}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  /* reveal */
+  var reveals=document.querySelectorAll('.reveal');
+  if(reduce||!('IntersectionObserver' in window)){reveals.forEach(function(el){el.classList.add('in');});}
+  else{var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+    reveals.forEach(function(el){io.observe(el);});}
+
+  /* ---------- reaction test ---------- */
+  var zone=document.getElementById('rzone');
+  var big=document.getElementById('rzBig'), small=document.getElementById('rzSmall');
+  var result=document.getElementById('rzResult');
+  var state='idle', startT=0, timer=null;
+
+  function setIdle(msg){
+    state='idle'; zone.className='react-zone';
+    big.textContent=msg||'Click to begin'; small.textContent='We\u2019ll measure how fast you react';
+  }
+  function waiting(){
+    state='waiting'; zone.className='react-zone waiting';
+    big.textContent='Wait for it…'; small.textContent='Click the instant it turns gold';
+    timer=setTimeout(function(){
+      state='go'; zone.className='react-zone go';
+      big.textContent='CLICK NOW'; small.textContent='';
+      startT=performance.now();
+    }, 1200+Math.random()*2600);
+  }
+  function react(){
+    var ms=Math.round(performance.now()-startT);
+    state='done'; zone.className='react-zone';
+    big.textContent=ms+' ms'; small.textContent='your reaction time — click to try again';
+    var ratio=Math.max(1,Math.round(ms/1));
+    result.innerHTML='You reacted in <b>'+ms+' milliseconds</b>. An algorithm does it in about <b>1</b> — roughly '+ratio+'\u00d7 faster. '+
+      'But speed was never your problem. The machine would post that same number on its ten-thousandth try, after a loss, at 3 a.m. You wouldn\u2019t. That consistency is the real edge.';
+    result.classList.add('show');
+  }
+  function handle(){
+    if(state==='idle'||state==='done'){ result.classList.remove('show'); waiting(); }
+    else if(state==='waiting'){ clearTimeout(timer); zone.className='react-zone early';
+      big.textContent='Too soon!'; small.textContent='Click to try again'; state='done'; }
+    else if(state==='go'){ react(); }
+  }
+  zone.addEventListener('click',handle);
+  zone.addEventListener('keydown',function(e){if(e.key===' '||e.key==='Enter'){e.preventDefault();handle();}});
+  setIdle();
+
+  /* ---------- rule composer ---------- */
+  function pick(groupId){
+    var sel=document.querySelector('#'+groupId+' button[aria-pressed="true"]');
+    return sel;
+  }
+  function wireSeg(groupId){
+    document.querySelectorAll('#'+groupId+' button').forEach(function(b){
+      b.addEventListener('click',function(){
+        document.querySelectorAll('#'+groupId+' button').forEach(function(x){x.setAttribute('aria-pressed','false');});
+        b.setAttribute('aria-pressed','true'); render();
+      });
+    });
+  }
+  var notes={
+    exit:"A pre-decided exit is the whole difference between a small, planned loss and the 40% one people keep hoping their way out of.",
+    trim:"This forces you to sell strength \u2014 almost physically uncomfortable to do by hand, which is exactly why you hand it to a rule.",
+    buy:"Notice what you\u2019ve removed: the \u201clet me wait for a better entry\u201d instinct that keeps people sitting in cash through entire rallies.",
+    reb:"Boring, mechanical, and responsible for more long-run return than most clever market calls ever are."
+  };
+  function render(){
+    var t=pick('segTrigger').dataset.v;
+    var aBtn=pick('segAction'); var a=aBtn.dataset.v; var k=aBtn.dataset.k;
+    var g=pick('segGuard').dataset.v;
+    document.getElementById('ruleText').innerHTML=
+      'When <span class="hl">'+t+'</span>, '+a+' \u2014 but never <span class="hl">'+g+'</span>.';
+    document.getElementById('ruleNote').innerHTML='<b>Why it works:</b> '+notes[k];
+  }
+  wireSeg('segTrigger');wireSeg('segAction');wireSeg('segGuard');
+  render();
+
+  /* ---------- myth cards ---------- */
+  document.querySelectorAll('.myth-card').forEach(function(c){
+    c.addEventListener('click',function(){
+      var open=c.classList.toggle('open');
+      c.setAttribute('aria-expanded',open?'true':'false');
+    });
+  });
+})();
+</script>
+</body>
+</html>

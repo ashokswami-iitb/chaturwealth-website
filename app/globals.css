@@ -263,3 +263,38 @@ input:focus, select:focus, textarea:focus {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ── Article prose styles ── add these to the bottom of globals.css ── */
+
+.prose-article p {
+  font-size: 0.97rem;
+  line-height: 1.9;
+  color: var(--body);
+  margin-bottom: 1.5rem;
+}
+
+.prose-article h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: -0.015em;
+}
+
+.prose-article blockquote {
+  border-left: 3px solid var(--gold);
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+  font-style: italic;
+  color: var(--navy);
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.prose-article strong {
+  color: var(--navy);
+  font-weight: 600;
+}
+

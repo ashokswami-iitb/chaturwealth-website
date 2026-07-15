@@ -2,17 +2,17 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import Link from "next/link";
 
 const featured = {
   tag: "Feature",
   title: "Why Disciplined Systems Beat Brilliant Traders",
   excerpt:
-    "Every year, thousands of intelligent, motivated individuals attempt to beat the market through skill and insight. Most fail — not from lack of intelligence, but from a fundamental misunderstanding of what edge actually means in modern markets. The best-performing strategies over the long run share one characteristic: they are boring. Systematic. Unemotional. This is not a coincidence.",
+    "Every year, thousands of intelligent, motivated individuals attempt to beat the market through skill and insight. Most fail — not from lack of intelligence, but from a fundamental misunderstanding of what edge actually means in modern markets.",
   readTime: "12 min read",
   author: "Editorial",
   date: "June 2025",
-  // FIX: Added href — was missing, button did nothing
-  href: "https://www.linkedin.com/pulse/why-disciplined-systems-beat-brilliant-traders-devesh-chawla",
+  href: "/insights/why-disciplined-systems-beat-brilliant-traders",
 };
 
 const articles = [
@@ -20,20 +20,19 @@ const articles = [
     tag: "Education",
     title: "What Is Algo Trading? A Primer for Serious Investors",
     excerpt:
-      "Algorithmic trading uses computer programs following precise instructions to execute trades based on market conditions — eliminating human error and emotional interference from the process.",
+      "Algorithmic trading uses computer programs following precise instructions to execute trades — eliminating human error and emotional interference from the process.",
     readTime: "6 min",
     date: "May 2025",
-    // FIX: Added href — was missing, button did nothing
-    href: "https://www.linkedin.com/in/deveshchawla/recent-activity/articles/",
+    href: "/insights/what-is-algo-trading",
   },
   {
     tag: "Risk Management",
     title: "The Architecture of Capital Preservation",
     excerpt:
-      "A framework for thinking about downside before upside. Why the best risk managers think in terms of scenarios, not forecasts, and how systematic rules protect capital through every cycle.",
+      "A framework for thinking about downside before upside. Why the best risk managers think in terms of scenarios, not forecasts, and how systematic rules protect capital.",
     readTime: "8 min",
     date: "April 2025",
-    href: "https://www.linkedin.com/in/deveshchawla/recent-activity/articles/",
+    href: "/insights/capital-preservation-architecture",
   },
   {
     tag: "Research",
@@ -42,7 +41,7 @@ const articles = [
       "Not all applications of AI to finance are equal. We examine what AI can legitimately contribute to investment decision-making — and where its limitations demand human oversight.",
     readTime: "7 min",
     date: "March 2025",
-    href: "https://www.linkedin.com/in/deveshchawla/recent-activity/articles/",
+    href: "/insights/ai-in-wealth-management",
   },
   {
     tag: "Psychology",
@@ -51,7 +50,7 @@ const articles = [
       "Fear and greed are not character flaws — they are hardwired human responses to uncertainty. Understanding their mechanism is the first step to removing them from your investment process.",
     readTime: "5 min",
     date: "February 2025",
-    href: "https://www.linkedin.com/in/deveshchawla/recent-activity/articles/",
+    href: "/#contact",
   },
 ];
 
@@ -110,13 +109,7 @@ export default function BlogSection() {
         </div>
 
         {/* Featured article */}
-        {/* FIX: Wrapped entire card in <a> tag — previously had cursor-pointer but no href, so clicking did nothing */}
-        <a
-          href={featured.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block mb-8"
-        >
+        <Link href={featured.href} className="block mb-8">
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -143,7 +136,6 @@ export default function BlogSection() {
                   background: "linear-gradient(160deg, var(--navy) 0%, #0a1928 100%)",
                 }}
               >
-                {/* Architectural grid */}
                 <div
                   className="absolute inset-0 opacity-[0.045]"
                   style={{
@@ -152,7 +144,6 @@ export default function BlogSection() {
                     backgroundSize: "40px 40px",
                   }}
                 />
-                {/* Large typographic mark */}
                 <div
                   className="absolute bottom-0 right-0 leading-none select-none pointer-events-none"
                   style={{
@@ -165,7 +156,6 @@ export default function BlogSection() {
                 >
                   CW
                 </div>
-                {/* Top: Tag */}
                 <div className="relative z-10">
                   <span
                     className="inline-block px-3 py-1.5 rounded-[4px] text-[0.62rem] font-bold tracking-[0.16em] uppercase"
@@ -178,7 +168,6 @@ export default function BlogSection() {
                     {featured.tag}
                   </span>
                 </div>
-                {/* Bottom: meta */}
                 <div className="relative z-10">
                   <div
                     className="text-[0.65rem] font-semibold tracking-wider uppercase mb-3"
@@ -198,11 +187,14 @@ export default function BlogSection() {
                 </div>
               </div>
 
-              {/* Divider line */}
+              {/* Divider */}
               <div style={{ background: "var(--border)" }} />
 
               {/* Content panel */}
-              <div className="p-8 md:p-10 flex flex-col justify-center" style={{ background: "var(--ivory)" }}>
+              <div
+                className="p-8 md:p-10 flex flex-col justify-center"
+                style={{ background: "var(--ivory)" }}
+              >
                 <div
                   className="text-[0.62rem] font-bold tracking-[0.18em] uppercase mb-4"
                   style={{ color: "var(--gold)" }}
@@ -232,19 +224,12 @@ export default function BlogSection() {
               </div>
             </div>
           </motion.div>
-        </a>
+        </Link>
 
         {/* Secondary articles */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
           {articles.map((a, i) => (
-            // FIX: Wrapped each card in <a> tag — previously had cursor-pointer but no href, so clicking did nothing
-            <a
-              key={a.title}
-              href={a.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block"
-            >
+            <Link key={a.title} href={a.href} className="block">
               <motion.article
                 initial={{ opacity: 0, y: 24 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -264,10 +249,11 @@ export default function BlogSection() {
                   (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
                 }}
               >
-                {/* Colour accent bar */}
                 <div
                   className="h-[2px] w-full"
-                  style={{ background: "linear-gradient(to right, var(--gold), var(--gold-border))" }}
+                  style={{
+                    background: "linear-gradient(to right, var(--gold), var(--gold-border))",
+                  }}
                 />
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-4">
@@ -277,10 +263,7 @@ export default function BlogSection() {
                     >
                       {a.tag}
                     </span>
-                    <span
-                      className="text-[0.65rem]"
-                      style={{ color: "var(--muted)" }}
-                    >
+                    <span className="text-[0.65rem]" style={{ color: "var(--muted)" }}>
                       {a.readTime}
                     </span>
                   </div>
@@ -316,7 +299,7 @@ export default function BlogSection() {
                   </div>
                 </div>
               </motion.article>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
