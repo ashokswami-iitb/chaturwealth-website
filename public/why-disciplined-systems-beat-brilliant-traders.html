@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Disciplined Systems Beat Brilliant Traders — Chatur Wealth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-900:#0a1626;
+    --navy:#0e1d33;
+    --ink:#1b2942;
+    --paper:#f7f3ea;
+    --paper-card:#fbf8f1;
+    --gold:#c9a227;
+    --gold-deep:#a8841c;
+    --gold-soft:rgba(201,162,39,.14);
+    --green:#5f9c43;
+    --loss:#b1422e;
+    --loss-soft:rgba(177,66,46,.12);
+    --text:#3a4355;
+    --text-soft:#6b7385;
+    --line:rgba(27,41,66,.12);
+    --line-dark:rgba(255,255,255,.10);
+    --display:'Playfair Display',Georgia,'Times New Roman',serif;
+    --body:'Source Sans 3',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    --shadow:0 18px 50px -28px rgba(14,29,51,.45);
+    --maxw:680px;
+    --maxw-wide:760px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--text);
+    font-family:var(--body);
+    font-size:1.075rem;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  /* ---------- reading progress ---------- */
+  .progress{
+    position:fixed;top:0;left:0;height:3px;width:0%;
+    background:linear-gradient(90deg,var(--gold-deep),var(--gold));
+    z-index:50;transition:width .08s linear;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    background:var(--navy-900);
+    color:#eef1f6;
+    overflow:hidden;
+    padding:clamp(4.5rem,11vw,8rem) 1.4rem clamp(3.2rem,7vw,5rem);
+  }
+  .hero::before{ /* faint grid, echoing the site card */
+    content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:46px 46px;
+    mask-image:radial-gradient(120% 90% at 30% 20%,#000 30%,transparent 80%);
+    -webkit-mask-image:radial-gradient(120% 90% at 30% 20%,#000 30%,transparent 80%);
+  }
+  .hero .watermark{
+    position:absolute;right:-3%;bottom:-22%;
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(16rem,34vw,30rem);line-height:.8;
+    color:rgba(255,255,255,.028);letter-spacing:-.04em;pointer-events:none;user-select:none;
+  }
+  .hero-inner{position:relative;max-width:860px;margin:0 auto;}
+  .eyebrow{
+    font-family:var(--body);font-weight:600;font-size:.72rem;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--gold);
+    display:inline-block;
+  }
+  .hero h1{
+    font-family:var(--display);font-weight:600;
+    font-size:clamp(2.5rem,6.4vw,4.4rem);
+    line-height:1.04;letter-spacing:-.01em;color:#fff;
+    margin:.9rem 0 0;max-width:14ch;
+  }
+  .hero .deck{
+    font-size:clamp(1.05rem,2.3vw,1.28rem);
+    line-height:1.65;color:#b9c2d2;margin:1.5rem 0 0;max-width:46ch;
+  }
+  .hero .meta{
+    margin-top:2.1rem;padding-top:1.3rem;border-top:1px solid var(--line-dark);
+    font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#7e8aa0;
+  }
+  .hero .meta b{color:var(--gold);font-weight:600;}
+
+  /* ---------- article shell ---------- */
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 1.4rem;}
+  .block{max-width:var(--maxw);margin-left:auto;margin-right:auto;padding:0 1.4rem;}
+
+  .article{padding:clamp(2.8rem,6vw,4.4rem) 0 1rem;}
+
+  .lede{font-size:1.18rem;line-height:1.7;color:var(--ink);}
+  .lede strong{font-weight:600;}
+
+  h2{
+    font-family:var(--display);font-weight:600;color:var(--ink);
+    font-size:clamp(1.6rem,3.6vw,2.3rem);line-height:1.18;
+    letter-spacing:-.005em;margin:3.2rem 0 1.1rem;
+  }
+  .article p{margin:0 0 1.35rem;}
+  .article p a{color:var(--gold-deep);}
+  em{font-style:italic;}
+  strong{color:var(--ink);font-weight:600;}
+
+  .kicker{
+    font-family:var(--body);font-weight:600;font-size:.72rem;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep);
+    display:block;margin:3.2rem 0 .5rem;
+  }
+  .kicker + h2{margin-top:.2rem;}
+
+  /* ---------- pull quote ---------- */
+  .pullquote{
+    max-width:var(--maxw-wide);margin:3rem auto;padding:.2rem 0 .2rem 1.6rem;
+    border-left:3px solid var(--gold);
+  }
+  .pullquote p{
+    font-family:var(--display);font-style:italic;font-weight:400;
+    font-size:clamp(1.4rem,3vw,1.85rem);line-height:1.35;color:var(--ink);margin:0;
+  }
+
+  /* ---------- generic interactive module ---------- */
+  .module{
+    max-width:var(--maxw-wide);margin:2.6rem auto;
+    background:var(--paper-card);border:1px solid var(--line);
+    border-radius:16px;box-shadow:var(--shadow);
+    padding:clamp(1.5rem,3.5vw,2.3rem);
+  }
+  .module-tag{
+    font-family:var(--body);font-weight:700;font-size:.68rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--gold-deep);display:flex;align-items:center;gap:.55rem;
+  }
+  .module-tag::before{content:"";width:18px;height:1px;background:var(--gold);display:inline-block;}
+  .module h3{
+    font-family:var(--display);font-weight:600;color:var(--ink);
+    font-size:clamp(1.3rem,2.6vw,1.6rem);line-height:1.25;margin:.7rem 0 .2rem;
+  }
+  .module .sub{font-size:1rem;color:var(--text-soft);margin:.4rem 0 1.3rem;}
+
+  /* ---------- scenario ---------- */
+  .scn-options{display:flex;flex-wrap:wrap;gap:.7rem;margin:.3rem 0 1.2rem;}
+  .scn-btn{
+    font-family:var(--body);font-size:.98rem;font-weight:600;color:var(--ink);
+    background:#fff;border:1.5px solid var(--line);border-radius:10px;
+    padding:.7rem 1.1rem;cursor:pointer;transition:all .18s ease;flex:1 1 auto;min-width:150px;
+  }
+  .scn-btn:hover{border-color:var(--gold);transform:translateY(-1px);}
+  .scn-btn[aria-pressed="true"]{
+    background:var(--navy);color:#fff;border-color:var(--navy);
+  }
+  .scn-reveal{
+    background:var(--gold-soft);border-radius:10px;padding:1.05rem 1.15rem;
+    font-size:1.02rem;line-height:1.6;color:var(--ink);
+    border-left:3px solid var(--gold);
+    max-height:0;opacity:0;overflow:hidden;padding-top:0;padding-bottom:0;
+    transition:max-height .4s ease,opacity .35s ease,padding .35s ease;
+  }
+  .scn-reveal.show{max-height:340px;opacity:1;padding-top:1.05rem;padding-bottom:1.05rem;}
+  .scn-foot{font-size:.95rem;color:var(--text-soft);margin:1rem 0 0;font-style:italic;}
+
+  /* ---------- loss calculator (signature) ---------- */
+  .calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;align-items:end;}
+  .calc-bars{
+    display:flex;gap:1.2rem;justify-content:center;align-items:flex-end;
+    height:240px;padding:0 .4rem;
+  }
+  .bar-col{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:1;height:100%;}
+  .bar-val{font-family:var(--display);font-weight:600;font-size:1.5rem;color:var(--ink);margin-bottom:.5rem;line-height:1;}
+  .bar{
+    width:100%;max-width:90px;border-radius:7px 7px 0 0;
+    transition:height .25s cubic-bezier(.22,.61,.36,1);min-height:6px;
+  }
+  .bar.loss{background:linear-gradient(180deg,#c8523c,var(--loss));}
+  .bar.gain{background:linear-gradient(180deg,var(--gold),var(--gold-deep));}
+  .bar-label{font-size:.78rem;color:var(--text-soft);text-align:center;margin-top:.6rem;max-width:120px;line-height:1.3;}
+
+  .calc-controls{display:flex;flex-direction:column;justify-content:center;}
+  .slider-readout{font-family:var(--display);font-size:2.6rem;font-weight:700;color:var(--ink);line-height:1;}
+  .slider-readout span{font-size:1.1rem;color:var(--text-soft);font-family:var(--body);font-weight:600;}
+  .slider-cap{font-size:.85rem;color:var(--text-soft);margin:.2rem 0 1.2rem;text-transform:uppercase;letter-spacing:.1em;}
+  input[type=range]{
+    -webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:6px;
+    background:linear-gradient(90deg,var(--loss) 0%,var(--gold) 100%);outline:none;margin:.4rem 0;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;appearance:none;width:24px;height:24px;border-radius:50%;
+    background:var(--navy);border:3px solid #fff;box-shadow:0 2px 8px rgba(14,29,51,.4);cursor:pointer;
+  }
+  input[type=range]::-moz-range-thumb{
+    width:22px;height:22px;border-radius:50%;background:var(--navy);
+    border:3px solid #fff;box-shadow:0 2px 8px rgba(14,29,51,.4);cursor:pointer;
+  }
+  .verdict{
+    margin-top:1.4rem;padding:.95rem 1.1rem;border-radius:10px;background:var(--navy);
+    color:#eef1f6;font-size:1.02rem;line-height:1.5;
+  }
+  .verdict b{color:var(--gold);font-weight:600;}
+
+  /* ---------- bias cards ---------- */
+  .bias-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-top:.4rem;}
+  .bias-card{
+    text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:12px;
+    padding:1.1rem 1.05rem;cursor:pointer;font-family:var(--body);
+    transition:border-color .18s ease,transform .18s ease,box-shadow .18s ease;
+  }
+  .bias-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:var(--shadow);}
+  .bias-num{font-family:var(--display);font-size:1rem;color:var(--gold-deep);font-weight:600;}
+  .bias-name{display:block;font-family:var(--display);font-weight:600;color:var(--ink);font-size:1.18rem;margin:.25rem 0 .55rem;line-height:1.15;}
+  .bias-hint{font-size:.82rem;color:var(--text-soft);display:flex;align-items:center;gap:.4rem;}
+  .bias-chev{transition:transform .25s ease;display:inline-block;color:var(--gold-deep);}
+  .bias-body{
+    max-height:0;opacity:0;overflow:hidden;
+    font-size:.96rem;line-height:1.55;color:var(--text);
+    transition:max-height .4s ease,opacity .3s ease,margin .3s ease;margin-top:0;
+  }
+  .bias-card.open{border-color:var(--gold);}
+  .bias-card.open .bias-body{max-height:260px;opacity:1;margin-top:.7rem;}
+  .bias-card.open .bias-chev{transform:rotate(90deg);}
+  .bias-card.open .bias-hint .hint-text{display:none;}
+
+  /* ---------- the decade chart ---------- */
+  .decade-chart{width:100%;height:auto;display:block;margin:.4rem 0 .2rem;}
+  .decade-legend{display:flex;gap:1.4rem;flex-wrap:wrap;margin:.2rem 0 1.1rem;font-size:.9rem;}
+  .leg{display:flex;align-items:center;gap:.5rem;color:var(--text-soft);}
+  .leg .dot{width:11px;height:3px;border-radius:2px;display:inline-block;}
+  .decade-results{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:.3rem;}
+  .res-card{border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;background:#fff;}
+  .res-tag{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;}
+  .res-tag.steady{color:var(--gold-deep);}
+  .res-tag.brill{color:var(--loss);}
+  .res-val{font-family:var(--display);font-weight:700;font-size:1.85rem;color:var(--ink);line-height:1.1;margin:.35rem 0 .15rem;}
+  .res-note{font-size:.85rem;color:var(--text-soft);}
+  .play-btn{
+    font-family:var(--body);font-weight:600;font-size:.95rem;color:#fff;background:var(--navy);
+    border:none;border-radius:10px;padding:.7rem 1.4rem;cursor:pointer;transition:background .18s ease,transform .18s ease;
+    margin:1.1rem 0 .3rem;display:inline-flex;align-items:center;gap:.5rem;
+  }
+  .play-btn:hover{background:var(--gold-deep);transform:translateY(-1px);}
+  .decade-cap{font-size:.92rem;color:var(--text-soft);font-style:italic;margin-top:1rem;}
+
+  /* ---------- decided-in-advance comparison ---------- */
+  .compare{max-width:var(--maxw-wide);margin:2.4rem auto;display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  .comp-col{border-radius:14px;padding:1.3rem 1.3rem 1.5rem;}
+  .comp-col.calm{background:var(--gold-soft);border:1px solid rgba(201,162,39,.3);}
+  .comp-col.panic{background:var(--loss-soft);border:1px solid rgba(177,66,46,.25);}
+  .comp-h{font-family:var(--body);font-weight:700;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.9rem;}
+  .comp-col.calm .comp-h{color:var(--gold-deep);}
+  .comp-col.panic .comp-h{color:var(--loss);}
+  .comp-item{font-size:.98rem;line-height:1.45;color:var(--ink);padding:.6rem 0;border-top:1px solid rgba(27,41,66,.08);}
+  .comp-item:first-of-type{border-top:none;}
+  .comp-col.panic .comp-item{color:#7a4035;font-style:italic;}
+
+  /* ---------- CTA ---------- */
+  .cta{
+    background:var(--navy-900);color:#fff;text-align:center;margin-top:4rem;
+    padding:clamp(3.5rem,8vw,5.5rem) 1.4rem;position:relative;overflow:hidden;
+  }
+  .cta::before{
+    content:"";position:absolute;inset:0;
+    background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+    background-size:46px 46px;
+    mask-image:radial-gradient(100% 100% at 50% 0%,#000 20%,transparent 75%);
+    -webkit-mask-image:radial-gradient(100% 100% at 50% 0%,#000 20%,transparent 75%);
+  }
+  .cta-inner{position:relative;max-width:640px;margin:0 auto;}
+  .cta h2{color:#fff;margin:.6rem 0 1rem;border:none;}
+  .cta p{color:#b9c2d2;font-size:1.1rem;margin:0 auto 2rem;max-width:42ch;}
+  .cta-btn{
+    display:inline-block;font-family:var(--body);font-weight:700;font-size:.82rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--navy-900);
+    background:var(--gold);padding:1.05rem 2.4rem;border-radius:6px;text-decoration:none;
+    transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+  }
+  .cta-btn:hover{transform:translateY(-2px);background:#dab63a;box-shadow:0 12px 30px -12px rgba(201,162,39,.6);}
+
+  footer{background:var(--navy-900);color:#6e7a90;padding:2rem 1.4rem 2.6rem;border-top:1px solid var(--line-dark);text-align:center;}
+  .foot-inner{max-width:680px;margin:0 auto;}
+  .foot-brand{font-family:var(--display);font-size:1rem;color:#cdd4e0;letter-spacing:.02em;}
+  .foot-brand b{color:var(--gold);font-weight:600;}
+  .disclaimer{font-size:.78rem;line-height:1.6;margin-top:.9rem;color:#5e6a80;}
+
+  /* ---------- scroll reveal ---------- */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:640px){
+    body{font-size:1.02rem;}
+    .calc-grid{grid-template-columns:1fr;gap:1.4rem;}
+    .calc-bars{order:2;height:200px;}
+    .calc-controls{order:1;}
+    .bias-grid{grid-template-columns:1fr;}
+    .bias-card.open .bias-body{max-height:300px;}
+    .decade-results{grid-template-columns:1fr;}
+    .compare{grid-template-columns:1fr;}
+    .scn-btn{flex:1 1 100%;}
+    .slider-readout{font-size:2.2rem;}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important;}
+    .reveal{opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="watermark" aria-hidden="true">CW</div>
+  <div class="hero-inner">
+    <span class="eyebrow">Editorial · Extended Read</span>
+    <h1>Why Disciplined Systems Beat Brilliant Traders</h1>
+    <p class="deck">Every year, thousands of sharp, driven people set out to beat the market on skill alone. Most don't — and it's almost never because they weren't clever enough. The strategies that survive decades share one unglamorous trait: they're boring, systematic, and completely indifferent to how anyone feels. Here's why that's no accident, and why it matters for your money.</p>
+    <div class="meta"><b>Chatur Wealth</b> &nbsp;·&nbsp; 12 Min Read &nbsp;·&nbsp; On Process Over Prediction</div>
+  </div>
+</header>
+
+<!-- ===================== ARTICLE ===================== -->
+<article class="article">
+
+  <div class="block reveal">
+    <p class="lede">You probably know someone like this. And if you're honest, maybe it's sometimes you.</p>
+    <p>Someone genuinely good at this. They read a chart and notice things other people miss. They called the last big move weeks before it happened. Friends ask them for tips. They're right often enough that <em>gift</em> starts to feel like the right word for it.</p>
+    <p>Then comes the one trade that quietly undoes all of it. It doesn't look dangerous at first — a reasonable bet on a company they know well, sized the way they always size things: by feel. The position drifts against them. They don't sell, because selling means admitting the read was wrong, and they've been right too often to be wrong now. So they add to it. It drifts further. They add again, because by now the average price matters more than the original idea ever did. Three weeks later, a trade that should have cost two percent of their capital has cost forty.</p>
+    <p>This isn't a rare story. In one form or another, it's the <strong>most common story in this entire business</strong>. The instrument changes, the headline changes, the size of the account changes — but the shape of the failure repeats with eerie consistency. A skilled person makes a sound decision, the market disagrees, and the very confidence that made them skilled becomes the thing that keeps them holding a position they should have walked away from hours, days, or weeks ago.</p>
+  </div>
+
+  <!-- ===== INTERACTIVE 1: scenario ===== -->
+  <div class="module reveal" id="scenario">
+    <div class="module-tag">Be honest for a second</div>
+    <h3>You're holding a position you believed in. It's down 8%.</h3>
+    <p class="sub">Nothing has fundamentally changed. Your gut says it's about to turn around. What do you <em>actually</em> do?</p>
+    <div class="scn-options" role="group" aria-label="Choose your response">
+      <button class="scn-btn" data-k="hold" aria-pressed="false">Hold and wait it out</button>
+      <button class="scn-btn" data-k="add" aria-pressed="false">Buy more at the lower price</button>
+      <button class="scn-btn" data-k="cut" aria-pressed="false">Cut it at your set level</button>
+    </div>
+    <div class="scn-reveal" id="scnReveal" role="status" aria-live="polite"></div>
+    <p class="scn-foot">There's no trick answer here. The point is that you had to decide in the moment — and the moment is the single worst time to be deciding.</p>
+  </div>
+
+  <div class="block reveal">
+    <span class="kicker">The talent trap</span>
+    <h2>Being right and staying solvent are two different skills</h2>
+    <p>Here's the uncomfortable part. Being good at reading markets and being good at <em>managing risk</em> are almost entirely separate abilities — and our industry has spent decades glamorising the first while quietly making its living off the second.</p>
+    <p>Reading the market is the exciting skill: the pattern recognition, the instinct, the satisfying feeling of seeing what's coming. Managing risk is the dull one: sizing a position so a single bad call can't hurt you, deciding your exit before you ever enter, and then — this is the hard bit — actually doing what you decided, even when every fibre of you is screaming that this time is different.</p>
+    <p>The trader in that opening story didn't lack talent. They lacked a structure that talent couldn't override. And that's the trap: the better you are at reading markets, the more you trust yourself to break your own rules "just this once." Brilliance, left unsupervised, talks you out of the very discipline that would have protected you.</p>
+  </div>
+
+  <!-- ===== INTERACTIVE 2: loss calculator (signature) ===== -->
+  <div class="module reveal" id="calc">
+    <div class="module-tag">Try it yourself</div>
+    <h3>A small loss and a big loss are not the same animal</h3>
+    <p class="sub">Losing money isn't symmetrical. A loss digs a hole — and the hole is always harder to climb out of than it was to fall into. Drag the slider and watch what any loss demands of you just to get back to even.</p>
+
+    <div class="calc-grid">
+      <div class="calc-controls">
+        <div class="slider-readout" id="lossOut">20<span>% lost</span></div>
+        <div class="slider-cap">The loss you let run</div>
+        <input type="range" id="lossSlider" min="5" max="60" value="20" step="1"
+               aria-label="Size of the loss" aria-valuetext="20 percent loss">
+        <div class="verdict" id="verdict" aria-live="polite"></div>
+      </div>
+      <div class="calc-bars" aria-hidden="true">
+        <div class="bar-col">
+          <div class="bar-val" id="lossVal">20%</div>
+          <div class="bar loss" id="lossBar" style="height:27px"></div>
+          <div class="bar-label">What you lost</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-val" id="gainVal">25%</div>
+          <div class="bar gain" id="gainBar" style="height:33px"></div>
+          <div class="bar-label">The gain you now need just to break even</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block reveal">
+    <p>A 10% slip is a rounding error — you'll likely make it back in a normal quarter without much drama. But a 50% loss needs your money to <strong>double</strong> just to return to where it started. Not to win. Not to grow. Simply to get back to even.</p>
+    <p>This is the whole game, and most people never internalise it. Disciplined systems aren't trying to be right more often than you are. They're built, above everything else, to keep you out of the part of that curve you can't climb back from. They protect the downside obsessively, because they understand that survival is what lets compounding do its work.</p>
+  </div>
+
+  <div class="block reveal">
+    <span class="kicker">What edge means now</span>
+    <h2>The advantage moved — and most people didn't follow it</h2>
+    <p>There genuinely was a time when a sharp individual could out-read the market. Information travelled slowly. The investor who phoned five suppliers and actually understood a company's supply chain knew something the rest of the market didn't yet. That edge was real, and it rewarded raw cleverness directly.</p>
+    <p>That world is mostly gone. Information now travels at the speed of a notification. Every public data point is parsed by algorithms within milliseconds of release. When you act on a strong hunch, you're often competing against infrastructure that can act on that same hunch ten thousand times faster — and with none of your emotional attachment to being proved right.</p>
+    <p>This doesn't mean edge has vanished. It means it <em>relocated</em>. It used to live in information. Now it lives, overwhelmingly, in <strong>behaviour</strong> — in your ability to do the dull, correct thing, consistently, on the days everyone else is too tired, too scared, or too pleased with themselves to do it.</p>
+  </div>
+
+  <div class="pullquote reveal">
+    <p>Edge used to live in information. Now it lives in behaviour — in doing the boring, correct thing on the day everyone else is too rattled to.</p>
+  </div>
+
+  <div class="block reveal">
+    <span class="kicker">The mind, working against you</span>
+    <h2>Your brain is brilliant — and built for the wrong job</h2>
+    <p>Here's the part that's hard to say out loud, even though nearly every experienced investor knows it privately: the human brain is poorly suited to making good decisions under financial pressure, in real time, with real money on the line.</p>
+    <p>None of what follows is a character flaw. It's standard-issue human wiring — and it's almost perfectly wrong for the specific task of calmly deciding what to do with a number that's losing your money. Tap each one.</p>
+  </div>
+
+  <!-- ===== INTERACTIVE 3: bias cards ===== -->
+  <div class="block reveal">
+    <div class="bias-grid">
+      <button class="bias-card" data-bias="1" aria-expanded="false">
+        <span class="bias-num">01</span>
+        <span class="bias-name">Loss aversion</span>
+        <span class="bias-hint"><span class="hint-text">Why even hurts</span><span class="bias-chev">›</span></span>
+        <div class="bias-body">A loss hurts about twice as much as the same-size gain feels good. So the smart move — taking a small, certain loss — feels <em>worse</em> in the moment than the foolish one of holding and hoping. Your own wiring is quietly voting against you.</div>
+      </button>
+      <button class="bias-card" data-bias="2" aria-expanded="false">
+        <span class="bias-num">02</span>
+        <span class="bias-name">Recency bias</span>
+        <span class="bias-hint"><span class="hint-text">Why streaks lie</span><span class="bias-chev">›</span></span>
+        <div class="bias-body">Three wins in a row and your brain decides you've figured it out — right before the fourth trade takes it all back. A hot streak feels exactly like skill. More often, it's just variance wearing a convincing disguise.</div>
+      </button>
+      <button class="bias-card" data-bias="3" aria-expanded="false">
+        <span class="bias-num">03</span>
+        <span class="bias-name">The story trap</span>
+        <span class="bias-hint"><span class="hint-text">Why you can't exit</span><span class="bias-chev">›</span></span>
+        <div class="bias-body">Once you've decided <em>why</em> a position will rise, every new fact gets bent to fit the story instead of judged on its own. The narrative that got you in becomes the very reason you can't bring yourself to get out.</div>
+      </button>
+    </div>
+  </div>
+
+  <div class="block reveal">
+    <p>A system doesn't outsmart these instincts — it isn't smarter than you. It simply <strong>isn't in the room</strong> when they show up. The decision was already made: earlier, calmly, with nothing yet at stake. By the time emotion arrives, there's nothing left to decide, only to execute.</p>
+  </div>
+
+  <div class="block reveal">
+    <span class="kicker">Why boring wins</span>
+    <h2>The whole game is decided in your worst few weeks</h2>
+    <p>There's a reason the word that keeps surfacing around the most consistently profitable approaches is <em>boring</em>. Boring means the same process, applied the same way, on the good days and the terrible ones. Boring means nobody adds an exception just this once because conviction feels unusually strong today. Boring means your eleventh decision of the year looks procedurally identical to your first — even though the market, the headlines, and your own mood have all completely changed.</p>
+    <p>This matters because investing success is overwhelmingly decided in the handful of <em>worst</em> weeks of any given year, not the best ones. A strategy that captures most of the upside but never makes the catastrophic, account-ending decision will quietly beat a strategy that captures every rally brilliantly but occasionally detonates. Brilliance produces spectacular outliers in both directions. Discipline produces a narrower, more survivable range — and survivability, compounded over years, is what actually builds wealth.</p>
+  </div>
+
+  <!-- ===== INTERACTIVE 4: the decade ===== -->
+  <div class="module reveal" id="decade">
+    <div class="module-tag">Watch a decade play out</div>
+    <h3>Two investors. Ten years. One bad decision.</h3>
+    <p class="sub">Both start with ₹10,00,000. One is brilliant — big returns in most years. One is disciplined — steady and unspectacular, worst year just −8%. The brilliant one has a single bad year. Press play and watch what it costs.</p>
+
+    <div class="decade-legend">
+      <span class="leg"><span class="dot" style="background:var(--gold-deep)"></span>The disciplined system</span>
+      <span class="leg"><span class="dot" style="background:var(--loss)"></span>The brilliant trader</span>
+    </div>
+
+    <svg class="decade-chart" id="decadeChart" viewBox="0 0 680 300" role="img"
+         aria-label="A chart comparing a steady disciplined portfolio against a brilliant but volatile one over ten years. The brilliant portfolio climbs higher, then crashes in year seven and ends below the steady one.">
+      <!-- gridlines + axis drawn by JS -->
+    </svg>
+
+    <button class="play-btn" id="playBtn">▶ &nbsp;Play the decade</button>
+
+    <div class="decade-results">
+      <div class="res-card">
+        <div class="res-tag steady">The disciplined system</div>
+        <div class="res-val" id="steadyVal">₹10,00,000</div>
+        <div class="res-note">Worst single year: −8%</div>
+      </div>
+      <div class="res-card">
+        <div class="res-tag brill">The brilliant trader</div>
+        <div class="res-val" id="brillVal">₹10,00,000</div>
+        <div class="res-note">One year of −65%</div>
+      </div>
+    </div>
+    <p class="decade-cap">Six of the brilliant trader's ten years beat the system. The seventh undid all of them. <em>(Illustrative figures — the pattern, not a promise.)</em></p>
+  </div>
+
+  <div class="block reveal">
+    <span class="kicker">What discipline looks like</span>
+    <h2>Decisions made early, when you were calm</h2>
+    <p>Strip away the theory and discipline is just a set of decisions made <strong>in advance</strong> rather than in the moment. A position size fixed as a percentage of your portfolio, regardless of how good an idea feels. A point at which a losing position is closed, written down before the trade is ever placed, not negotiated with afterwards. A rebalancing schedule that forces you to trim what's run up and add to what's lagged — which feels wrong almost every time, and is usually right almost every time.</p>
+    <p>None of these rules are clever. You could write a version of them on a napkin in five minutes. The difficulty has never been <em>knowing</em> the rule. It's following it on the one day it actually costs something to follow.</p>
+  </div>
+
+  <div class="compare reveal">
+    <div class="comp-col calm">
+      <div class="comp-h">Decided in advance — calm</div>
+      <div class="comp-item">Position size fixed as a set % of the portfolio</div>
+      <div class="comp-item">Exit level written down before you enter</div>
+      <div class="comp-item">Rebalance on a fixed schedule, no matter what</div>
+    </div>
+    <div class="comp-col panic">
+      <div class="comp-h">Left to the moment — panic</div>
+      <div class="comp-item">"This one's a sure thing — let's go bigger"</div>
+      <div class="comp-item">"I'll get out once it comes back"</div>
+      <div class="comp-item">"Why on earth would I sell what's working?"</div>
+    </div>
+  </div>
+
+  <div class="block reveal">
+    <span class="kicker">Where the judgment goes</span>
+    <h2>Discipline isn't the absence of judgment</h2>
+    <p>It would be a mistake to read any of this as an argument against thinking carefully. Someone still has to <em>build</em> the system: decide what risks are worth taking, which signals are worth acting on, how much turbulence a portfolio should tolerate, and when the rules themselves need revisiting because the world has genuinely changed. That work takes real expertise, and it never stops.</p>
+    <p>The difference is simply <strong>when</strong> the thinking happens. Discretionary trading asks you to be at your analytical best in the worst possible moment — mid-drawdown, pulse up, account flashing red. A systematic approach moves the hard thinking earlier: into a quiet room, with no position open and nothing yet at stake, where good judgment is actually possible. Then it asks for the simpler — and somehow harder — discipline of just following through.</p>
+    <p>That's the real distinction between brilliance and discipline. Brilliance is a single great decision. Discipline is a thousand small, consistent ones, made by someone calm enough to make them the same way every time. It's why the steadiest performers rarely look exciting in any given month. They look unremarkable — right up until you add up what unremarkable actually does over ten years.</p>
+    <p>This is the philosophy we build on at <strong>Chatur Wealth</strong>: not the pursuit of a brilliant call, but the construction of a process disciplined enough to outlast one. Markets reward patience and structure far more reliably than they reward conviction — and building wealth, in the end, has always been less about being right once and more about never being wrong in a way you can't come back from.</p>
+  </div>
+
+</article>
+
+<!-- ===================== CTA ===================== -->
+<section class="cta">
+  <div class="cta-inner">
+    <span class="eyebrow">Chatur Wealth</span>
+    <h2>Build the process, not the prediction.</h2>
+    <p>If that's the way you'd rather grow your wealth — steadily, structurally, without betting the outcome on a single brilliant call — let's talk.</p>
+    <a class="cta-btn" href="https://chaturwealth.com/#contact">Start the conversation</a>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand"><b>Chatur</b> Wealth</div>
+    <p class="disclaimer">This article is for educational purposes only and is not investment advice or a recommendation to buy or sell any security. All figures shown are hypothetical and illustrative; they do not represent the past or expected performance of any strategy or account. Investing involves risk, including the possible loss of capital.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- reading progress ---------- */
+  var bar = document.getElementById('progress');
+  function onScroll(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop || document.body.scrollTop) / max * 100 : 0;
+    bar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  /* ---------- scroll reveal ---------- */
+  var reveals = document.querySelectorAll('.reveal');
+  if(reduce || !('IntersectionObserver' in window)){
+    reveals.forEach(function(el){el.classList.add('in');});
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    reveals.forEach(function(el){io.observe(el);});
+  }
+
+  /* ---------- scenario ---------- */
+  var scnText = {
+    hold:"The most common answer — and the most human one. The trouble isn't holding; it's that \u201cabout to turn\u201d has no exit attached to it. Hope isn't a plan, and the market doesn't owe you the bounce.",
+    add:"Averaging down feels like conviction, and sometimes it is. But it's also exactly how a 2% mistake quietly becomes a 40% one. You've now bet more on being right than on staying solvent.",
+    cut:"Unsexy, mildly painful, and precisely what a system would have done — without the internal argument. You didn't need to be brilliant here. You needed a rule you'd already agreed to keep."
+  };
+  var scnReveal = document.getElementById('scnReveal');
+  document.querySelectorAll('.scn-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.scn-btn').forEach(function(b){b.setAttribute('aria-pressed','false');});
+      btn.setAttribute('aria-pressed','true');
+      scnReveal.textContent = scnText[btn.dataset.k];
+      scnReveal.classList.add('show');
+    });
+  });
+
+  /* ---------- loss calculator ---------- */
+  var slider = document.getElementById('lossSlider');
+  var lossOut = document.getElementById('lossOut');
+  var lossVal = document.getElementById('lossVal');
+  var gainVal = document.getElementById('gainVal');
+  var lossBar = document.getElementById('lossBar');
+  var gainBar = document.getElementById('gainBar');
+  var verdict = document.getElementById('verdict');
+  var TRACK = 210;        // px available for the tallest bar
+  var SCALE_MAX = 150;    // % required-gain at the 60% max loss -> fills the track
+
+  function fmtPct(x){ return (Math.round(x*10)/10).toString().replace(/\.0$/,''); }
+
+  function updateCalc(){
+    var loss = parseInt(slider.value,10);
+    var need = loss/(100-loss)*100;           // gain required to break even
+    lossOut.innerHTML = loss + '<span>% lost</span>';
+    lossVal.textContent = loss + '%';
+    gainVal.textContent = '+' + fmtPct(need) + '%';
+    lossBar.style.height = Math.max(6,(loss/SCALE_MAX)*TRACK) + 'px';
+    gainBar.style.height = Math.max(6,(Math.min(need,SCALE_MAX)/SCALE_MAX)*TRACK) + 'px';
+    slider.setAttribute('aria-valuetext', loss + ' percent loss, needs ' + fmtPct(need) + ' percent gain to break even');
+
+    var v;
+    if(loss <= 15){
+      v = 'Annoying, but recoverable in a normal year. You need a <b>'+fmtPct(need)+'%</b> gain — roughly proportional to the loss.';
+    } else if(loss <= 30){
+      v = 'The gap is opening up. A <b>'+fmtPct(need)+'%</b> gain now. You\u2019re starting to hope rather than invest.';
+    } else if(loss <= 45){
+      v = 'Now it bites. You need <b>'+fmtPct(need)+'%</b> just to get back to flat — and that takes time you can\u2019t get back.';
+    } else {
+      v = 'This is the trade people don\u2019t come back from. You need a <b>'+fmtPct(need)+'%</b> gain just to break even.';
+    }
+    verdict.innerHTML = v;
+  }
+  slider.addEventListener('input', updateCalc);
+  updateCalc();
+
+  /* ---------- bias cards ---------- */
+  document.querySelectorAll('.bias-card').forEach(function(card){
+    card.addEventListener('click', function(){
+      var open = card.classList.toggle('open');
+      card.setAttribute('aria-expanded', open ? 'true':'false');
+    });
+  });
+
+  /* ---------- the decade ---------- */
+  var steadyMul = [1.09,1.07,1.11,1.08,1.10,1.06,0.92,1.09,1.10,1.08];
+  var brillMul  = [1.18,1.22,1.15,1.30,1.12,1.25,0.35,1.20,1.15,1.18];
+  var START = 1000000;
+
+  function series(muls){
+    var out=[START], v=START;
+    muls.forEach(function(m){ v=v*m; out.push(v); });
+    return out;
+  }
+  var steady = series(steadyMul);
+  var brill  = series(brillMul);
+  var STEADY_END = steady[steady.length-1];
+  var BRILL_END  = brill[brill.length-1];
+
+  var svg = document.getElementById('decadeChart');
+  var W=680,H=300,padL=46,padR=14,padT=18,padB=30;
+  var maxY = 3200000, minY = 0;
+  function X(i){ return padL + i*(W-padL-padR)/10; }
+  function Y(v){ return padT + (1-(v-minY)/(maxY-minY))*(H-padT-padB); }
+  var NS='http://www.w3.org/2000/svg';
+
+  function mk(tag,attrs){
+    var e=document.createElementNS(NS,tag);
+    for(var k in attrs) e.setAttribute(k,attrs[k]);
+    return e;
+  }
+  function inr(v){ return '₹'+new Intl.NumberFormat('en-IN',{maximumFractionDigits:0}).format(Math.round(v)); }
+
+  // gridlines + y labels (in lakhs)
+  [0,1000000,2000000,3000000].forEach(function(g){
+    svg.appendChild(mk('line',{x1:padL,y1:Y(g),x2:W-padR,y2:Y(g),stroke:'rgba(27,41,66,.10)','stroke-width':1}));
+    var t=mk('text',{x:padL-8,y:Y(g)+4,'text-anchor':'end','font-size':11,fill:'#9aa1b0','font-family':'Source Sans 3, sans-serif'});
+    t.textContent = g===0 ? '0' : (g/100000)+'L';
+    svg.appendChild(t);
+  });
+  // x labels (years)
+  for(var i=0;i<=10;i+=2){
+    var xt=mk('text',{x:X(i),y:H-10,'text-anchor':'middle','font-size':11,fill:'#9aa1b0','font-family':'Source Sans 3, sans-serif'});
+    xt.textContent = 'Yr '+i;
+    svg.appendChild(xt);
+  }
+
+  function pts(arr){ return arr.map(function(v,i){return X(i)+','+Y(v);}).join(' '); }
+
+  var steadyLine = mk('polyline',{points:pts(steady),fill:'none',stroke:'#a8841c','stroke-width':3,'stroke-linejoin':'round','stroke-linecap':'round'});
+  var brillLine  = mk('polyline',{points:pts(brill),fill:'none',stroke:'#b1422e','stroke-width':3,'stroke-linejoin':'round','stroke-linecap':'round'});
+  svg.appendChild(steadyLine);
+  svg.appendChild(brillLine);
+
+  // markers at the year-7 crash / dip
+  var crashDot = mk('circle',{cx:X(7),cy:Y(brill[7]),r:5,fill:'#b1422e',stroke:'#fff','stroke-width':2,opacity:0});
+  var dipDot   = mk('circle',{cx:X(7),cy:Y(steady[7]),r:4,fill:'#a8841c',stroke:'#fff','stroke-width':2,opacity:0});
+  svg.appendChild(crashDot); svg.appendChild(dipDot);
+  var crashLbl = mk('text',{x:X(7),y:Y(brill[7])+22,'text-anchor':'middle','font-size':12,'font-weight':700,fill:'#b1422e','font-family':'Source Sans 3, sans-serif',opacity:0});
+  crashLbl.textContent='−65%';
+  svg.appendChild(crashLbl);
+
+  // set up dash for draw-in
+  var sLen = steadyLine.getTotalLength();
+  var bLen = brillLine.getTotalLength();
+  function armLine(line,len){
+    line.style.strokeDasharray = len;
+    line.style.strokeDashoffset = len;
+  }
+
+  var steadyValEl=document.getElementById('steadyVal');
+  var brillValEl=document.getElementById('brillVal');
+
+  function ease(t){ return 1-Math.pow(1-t,3); }
+
+  function showFinal(){
+    steadyLine.style.strokeDashoffset=0;
+    brillLine.style.strokeDashoffset=0;
+    crashDot.setAttribute('opacity',1); dipDot.setAttribute('opacity',1); crashLbl.setAttribute('opacity',1);
+    steadyValEl.textContent=inr(STEADY_END);
+    brillValEl.textContent=inr(BRILL_END);
+  }
+
+  function play(){
+    if(reduce){ showFinal(); return; }
+    armLine(steadyLine,sLen); armLine(brillLine,bLen);
+    crashDot.setAttribute('opacity',0); dipDot.setAttribute('opacity',0); crashLbl.setAttribute('opacity',0);
+    var dur=1900, t0=null;
+    function step(ts){
+      if(!t0) t0=ts;
+      var p=Math.min((ts-t0)/dur,1), e=ease(p);
+      steadyLine.style.strokeDashoffset = sLen*(1-e);
+      brillLine.style.strokeDashoffset = bLen*(1-e);
+      steadyValEl.textContent = inr(START + (STEADY_END-START)*e);
+      brillValEl.textContent  = inr(START + (BRILL_END-START)*e);
+      if(p>=1){
+        crashDot.setAttribute('opacity',1); dipDot.setAttribute('opacity',1); crashLbl.setAttribute('opacity',1);
+      }
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  armLine(steadyLine,sLen); armLine(brillLine,bLen);
+  document.getElementById('playBtn').addEventListener('click', play);
+
+  // auto-play once when scrolled into view
+  if(!reduce && 'IntersectionObserver' in window){
+    var played=false;
+    var dio=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting && !played){ played=true; play(); dio.disconnect(); }
+      });
+    },{threshold:.4});
+    dio.observe(document.getElementById('decade'));
+  } else {
+    showFinal();
+  }
+})();
+</script>
+</body>
+</html>
